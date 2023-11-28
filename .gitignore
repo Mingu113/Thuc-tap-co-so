@@ -3,6 +3,7 @@
 #Exclude teacher's example files
 QLDB.cpp
 QLNV.cpp
+*.dat
 
 # Compiled Object files
 *.slo

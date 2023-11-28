@@ -13,11 +13,10 @@ typedef struct
 	string TenKH;
 	int sodu;
 } KhachHang;
-typedef struct 
+typedef struct
 {
 	char MaKH[4];
 	int LuongTien;
-	string LoaiGD;
 } GiaoDich;
 vector<KhachHang> DSKhachHang;
 vector<GiaoDich> DSGiaoDich;
@@ -25,16 +24,19 @@ vector<GiaoDich> DSGiaoDich;
 KhachHang NhapKH();
 KhachHang ThemKH(const char ma[4], string ten, int sodu);
 GiaoDich TaoGiaoDich(const char ma[4], int tien, string loai);
-bool operator==(const KhachHang& a, const KhachHang& b) {
+bool operator==(const KhachHang &a, const KhachHang &b)
+{
 	return strcmp(a.MaKH, b.MaKH) == 0 ? true : false;
 };
 vector<KhachHang> NhapDSKH();
+vector<GiaoDich> NhapDSGD();
 void InKH(KhachHang kh);
-void ThucHienGiaoDich(vector<KhachHang> DSKhachHang,KhachHang kh, int money, string LoaiGD);
+void ThucHienGiaoDich(KhachHang kh, int money, string LoaiGD);
 void NhapKHVaoFile(vector<KhachHang> DSKH);
 void GhiGDVaoFile(vector<GiaoDich> DSGiaoDich);
-void DocGiaoDich();
-void DocDSKH(vector<KhachHang> DSKhachHang);
+void DocGiaoDich(vector<GiaoDich> DSGiaoDich);
+void InGD(GiaoDich gd);
+void InDSKH(vector<KhachHang> DSKhachHang);
 // Hàm main
 int main()
 {
@@ -45,9 +47,12 @@ int main()
 	NhapKHVaoFile(DSKhachHang);
 	DSKhachHang.clear();
 	DSKhachHang = NhapDSKH();
-	ThucHienGiaoDich(DSKhachHang, kh1, 5000, "rut tien");
-	ThucHienGiaoDich(DSKhachHang, kh2, 20000, "gui tien");
-	DocGiaoDich();
+	InDSKH(DSKhachHang);
+	ThucHienGiaoDich(kh1, 5000, "rut tien");
+	ThucHienGiaoDich(kh2, 20000, "gui tien");
+	DSGiaoDich.clear();
+	DSGiaoDich = NhapDSGD();
+	DocGiaoDich(DSGiaoDich);
 	int a;
 	cin >> a;
 }
@@ -80,9 +85,9 @@ vector<KhachHang> NhapDSKH()
 	vector<KhachHang> DS;
 	FILE *f;
 	f = fopen(PathCustomer, "rb");
-	if(f!=NULL)
+	if (f != NULL)
 	{
-		while(!feof(f))
+		while (!feof(f))
 		{
 			KhachHang kh;
 			fread(&kh, sizeof(kh), 1, f);
@@ -93,42 +98,59 @@ vector<KhachHang> NhapDSKH()
 	}
 	return DS;
 }
-GiaoDich TaoGiaoDich(const char ma[4], int tien, string loai)
+GiaoDich TaoGiaoDich(const char ma[4], int tien)
 {
 	GiaoDich gd;
 	strcpy(gd.MaKH, ma);
 	gd.LuongTien = tien;
-	gd.LoaiGD = loai;
 	return gd;
+}
+vector<GiaoDich> NhapDSGD()
+{
+	vector<GiaoDich> DS;
+	FILE *f;
+	f = fopen(PathTrans, "rb");
+	if (f != NULL)
+		while (!feof(f))
+		{
+			GiaoDich gd;
+			fread(&gd, sizeof(GiaoDich), 1, f);
+			DS.push_back(gd);
+		}
+	fclose(f);
+	DS.pop_back();
+	return DS;
 }
 void GhiGDVaoFile(vector<GiaoDich> DSGiaoDich)
 {
 	FILE *f;
-	f= fopen(PathTrans, "wb");
+	f = fopen(PathTrans, "wb");
 	GiaoDich gd;
-	for(int i=0; i< DSGiaoDich.size(); i++)
+	for (int i = 0; i < DSGiaoDich.size(); i++)
 	{
 		gd = DSGiaoDich[i];
 		fwrite(&gd, sizeof(GiaoDich), 1, f);
 	}
 	fclose(f);
 }
-void ThucHienGiaoDich(vector<KhachHang> DSKhachHang, KhachHang kh, int money,string LoaiGD)
+void ThucHienGiaoDich(KhachHang kh, int money, string LoaiGD)
 {
 	bool HoanThanh = false;
-	for(int i = 0; i < DSKhachHang.size(); i++)
+	for (int i = 0; i < DSKhachHang.size(); i++)
 	{
-		if(DSKhachHang[i] == kh)
+		if (DSKhachHang[i] == kh)
 		{
-			if(LoaiGD.compare("rut tien") == 0)
+			GiaoDich gd;
+			if (LoaiGD.compare("rut tien") == 0)
 			{
 				DSKhachHang[i].sodu -= money;
+				gd = TaoGiaoDich(kh.MaKH, money * -1);
 			}
-			else 
+			else
 			{
 				DSKhachHang[i].sodu += money;
+				gd = TaoGiaoDich(kh.MaKH, money);
 			}
-			GiaoDich gd = TaoGiaoDich(kh.MaKH, money, LoaiGD);
 			DSGiaoDich.push_back(gd);
 			GhiGDVaoFile(DSGiaoDich);
 			NhapKHVaoFile(DSKhachHang);
@@ -136,29 +158,33 @@ void ThucHienGiaoDich(vector<KhachHang> DSKhachHang, KhachHang kh, int money,str
 			break;
 		}
 	}
-	if(HoanThanh == false) cout << "Giao dich that bai" << endl;
+	if (HoanThanh == false)
+		cout << "Giao dich that bai" << endl;
+}
+void InGD(GiaoDich gd)
+{
+	cout << "Ma: " << gd.MaKH << ", Luong tien: " << (gd.LuongTien < 0 ? gd.LuongTien * -1 : gd.LuongTien) << ", Loai GD: " << (gd.LuongTien < 0 ? "rut tien" : "gui tien") << endl;
 }
 void DocGiaoDich(vector<GiaoDich> DSGiaoDich)
 {
 	for (size_t i = 0; i < DSGiaoDich.size(); i++)
 	{
-		DSGiaoDich[i];
-		cout << DSGiaoDich[i].MaKH << ", " << DSGiaoDich[i].LuongTien << ", " << DSGiaoDich[i].LoaiGD << ", " << endl;
+		InGD(DSGiaoDich[i]);
 	}
 }
-void DocDSKH(vector<KhachHang> DSKhachHang)
+void InDSKH(vector<KhachHang> DSKhachHang)
 {
 	for (size_t i = 0; i < DSKhachHang.size(); i++)
 	{
 		InKH(DSKhachHang[i]);
 	}
 }
-void NhapKHVaoFile(vector<KhachHang> DSKhachHang) 
+void NhapKHVaoFile(vector<KhachHang> DSKhachHang)
 {
 	FILE *f;
-	f= fopen(PathCustomer, "wb");
+	f = fopen(PathCustomer, "wb");
 	KhachHang kh;
-	for(int i=0; i< DSKhachHang.size(); i++)
+	for (int i = 0; i < DSKhachHang.size(); i++)
 	{
 		kh = DSKhachHang[i];
 		fwrite(&kh, sizeof(KhachHang), 1, f);

@@ -53,7 +53,7 @@ void docDBTuFile()
 		db.pop_back();
 	}	
 }
-
+ 
 void ghiDBVaoFile()
 {
 	int size = db.size();

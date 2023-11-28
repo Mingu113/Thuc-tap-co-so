@@ -73,7 +73,7 @@ void inDSNV()
 	for(int i=0; i<size; i++)
 		inNV(dsNV[i]);
 }
-
+ 
 NhanVien nhapNVTuBP()
 {
 	NhanVien nv;
