@@ -1,0 +1,17 @@
+"Chương trình đơn giản quản lý các giao dịch của một ngân hàng. 
+Các chi tiết khách hàng được nhập vào và lưu trong một tập tin gọi là customer. 
+Cấu trúc của một khách hàng bao gồm các thông tin sau:
+ - Mã khách hàng: Mã số định danh của mỗi khách hàng
+ - Tên khách hàng: Tên gọi của khách hàng
+ - Số dư tiền gửi: Số dư trong tài khoản của mỗi khách hàng.
+ Khi thực hiện giao dịch, thông tin các giao dịch sẽ được ghi trong một tập tin tên là trans. 
+Mỗi giao dịch sẽ được ghi các thông tin sau:
+   - Mã khách hàng
+ - Loại giao dịch (gửi hay rút tiền)
+ - Lượng tiền giao dịch.
+ Chương trình có các chức năng sau đây:
+ 1. Thêm mới khách hàng.
+ 2. Cho phép khách hàng gửi tiền
+ 3. Cho phép khách hàng rút tiền
+ 4. In danh sách khách hàng
+ 5. In sao kê cho một khách hàng (Các giao dịch mà một khách hàng đã thực hiện)"
