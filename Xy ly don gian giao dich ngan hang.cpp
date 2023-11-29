@@ -40,7 +40,7 @@ void InDSKH(vector<KhachHang> DSKhachHang);
 // Hàm main
 int main()
 {
-	KhachHang kh1 = ThemKH("001", "Nguyen Van A", 100000);
+	KhachHang kh1 = ThemKH("001", "Nguyen Van A", 1000000);
 	KhachHang kh2 = ThemKH("002", "Tran Van B", 200000);
 	DSKhachHang.push_back(kh1);
 	DSKhachHang.push_back(kh2);
@@ -48,11 +48,12 @@ int main()
 	DSKhachHang.clear();
 	DSKhachHang = NhapDSKH();
 	InDSKH(DSKhachHang);
-	ThucHienGiaoDich(kh1, 5000, "rut tien");
-	ThucHienGiaoDich(kh2, 20000, "gui tien");
+	ThucHienGiaoDich(kh1, 500000, "rut tien");
+	ThucHienGiaoDich(kh2, 2000000, "gui tien");
 	DSGiaoDich.clear();
 	DSGiaoDich = NhapDSGD();
 	DocGiaoDich(DSGiaoDich);
+	InDSKH(DSKhachHang);
 	int a;
 	cin >> a;
 }
@@ -163,7 +164,11 @@ void ThucHienGiaoDich(KhachHang kh, int money, string LoaiGD)
 }
 void InGD(GiaoDich gd)
 {
-	cout << "Ma: " << gd.MaKH << ", Luong tien: " << (gd.LuongTien < 0 ? gd.LuongTien * -1 : gd.LuongTien) << ", Loai GD: " << (gd.LuongTien < 0 ? "rut tien" : "gui tien") << endl;
+	cout
+		<< "Ma: " << gd.MaKH << ", Luong tien: "
+		<< (gd.LuongTien < 0 ? gd.LuongTien * -1 : gd.LuongTien)
+		<< ", Loai GD: " << (gd.LuongTien < 0 ? "rut tien" : "gui tien")
+		<< endl;
 }
 void DocGiaoDich(vector<GiaoDich> DSGiaoDich)
 {
