@@ -28,6 +28,7 @@ typedef struct
 	char MaKH[4];
 	float LuongTien;
 	int LoaiGD; // 1: Rút tiền, 2: Gửi tiền
+	float SoDu; // Số dư hiện tại sau khi giao dịch của khách hàng
 	time_t NgayGD;
 } GiaoDich;
 // Vector Danh sách khách hàng
@@ -62,7 +63,7 @@ void InKH(KhachHang kh);
 // In danh sách khách hàng hiện tại
 void InDSKH();
 
-// so sánh hai khách hàng bằng mã khách hàng
+// So sánh hai khách hàng bằng mã khách hàng
 bool operator==(const KhachHang &a, const KhachHang &b)
 {
 	return strcmp(a.MaKH, b.MaKH) == 0 ? true : false;
@@ -80,18 +81,26 @@ void DocGDtuFile();
 // Thực hiện giao dịch
 void ThucHienGD();
 
-// Sao kê giao dịch của một khách hàng
+// In một giao dịch ra màn hình
+void InGD(GiaoDich gd);
+
+// Sao kê giao dịch của khách hàng
 void SaoKe();
 
 // Menu
 void Menu();
+
+// Menu khách hàng
+void Menu_KhachHang();
 
 // Hàm main
 int main()
 {
 	// Chỉnh timezone sang Việt Nam
 	putenv("TZ=Asia/Vietnam");
-	
+	DocGDtuFile();
+	DocKHtuFile();
+	Menu();
 	int a;
 	cin >> a;
 }
@@ -183,6 +192,8 @@ bool CapNhatKH(KhachHang kh)
 			DSKhachHang[i].sodu = kh.sodu;
 			strcpy(DSKhachHang[i].MaKH, kh.MaKH);
 			strcpy(DSKhachHang[i].TenKH, kh.TenKH);
+			GhiKHvaoFile();
+			DocKHtuFile();
 		}
 	}
 	if (!complete)
@@ -207,8 +218,6 @@ void DocKHtuFile()
 		fclose(f);
 		DSKhachHang.pop_back();
 	}
-	else
-		wcout << L"Lỗi đọc tập tin";
 }
 
 void GhiGDvaoFile()
@@ -241,17 +250,10 @@ void DocGDtuFile()
 		fclose(f);
 		DSGiaoDich.pop_back();
 	}
-	else
-		wcout << L"Lỗi đọc tập tin";
 }
 
 bool ThemGD(GiaoDich gd)
 {
-	for (int i = 0; i < DSKhachHang.size(); i++)
-	{
-		if (strcmp(gd.MaKH, DSGiaoDich[i].MaKH) == 0)
-			return false;
-	}
 	DSGiaoDich.push_back(gd);
 	GhiGDvaoFile();
 	return true;
@@ -266,6 +268,7 @@ NhapMa:
 	KhachHang kh;
 	char TienGD[1024];
 	cout << "Nhap ma khach hang: ";
+	fflush(stdin);
 	gets(kh.MaKH);
 	// Nếu người nhập nhấn huỷ thì ngưng
 	if (strcmp(kh.MaKH, "huy") == 0)
@@ -285,7 +288,8 @@ NhapMa:
 // Nhập loại giao dịch
 NhapLoaiGD:
 	int LoaiGD;
-	cout << "1: Rut tien\n2: Gui tien\n3: Huy\n" << "Nhap loai giao dich: ";
+	cout << "1: Rut tien\n2: Gui tien\n3: Huy\n"
+		 << "Nhap loai giao dich: ";
 	cin >> LoaiGD;
 	switch (LoaiGD)
 	{
@@ -310,29 +314,125 @@ NhapLuongTien:
 	cin >> TienGD;
 	if (strcmp(TienGD, "huy") == 0)
 		return;
-	if(atof(TienGD) < kh.sodu && gd.LoaiGD == 1)
+	if (atof(TienGD) > kh.sodu && gd.LoaiGD == 1)
 	{
 		cout << "Khach hang khong du tien trong tai khoan de thuc hien giao dich" << endl;
 		goto NhapLuongTien;
 	}
-	else 
+	else
 	{
 		gd.LuongTien = atof(TienGD);
+		(gd.LoaiGD == 1) ? kh.sodu -= gd.LuongTien : kh.sodu += gd.LuongTien;
+		CapNhatKH(kh);
 	}
 	// Thực hiện giao dịch
-	gd.MaGD = DSGiaoDich.size();
-	gd.NgayGD = time(0);
+	gd.MaGD = DSGiaoDich.size() + 1;
+	gd.NgayGD = time(NULL);
+	gd.SoDu = kh.sodu;
 	ThemGD(gd);
+	Menu();
+}
+
+void InGD(GiaoDich gd)
+{
+	cout << "----------------------------" << endl;
+	cout << "Ma giao dich: " << gd.MaGD << endl;
+	cout << "Ma khach hang: " << gd.MaKH << endl;
+	cout << "Luong tien: " << gd.LuongTien << endl;
+	cout << "Loai giao dich: " << (gd.LoaiGD == 1) ? "Rut tien\n" : "Gui tien\n";
+	cout << "So du hien tai: " << gd.SoDu << endl;
+	cout << "Thoi gian giao dich: " << asctime(localtime(&gd.NgayGD)) << endl;
 }
 
 void SaoKe()
 {
-	
+	bool temp = false;
+	cout << "Nhap ma khach hang can lap sao ke: ";
+	fflush(stdin);
+	char Ma[4];
+	cin >> Ma;
+	for (int i = 0; i < DSGiaoDich.size(); i++)
+	{
+		if (strcmp(DSGiaoDich[i].MaKH, Ma) == 0)
+		{
+			InGD(DSGiaoDich[i]);
+			temp = true;
+		}
+	}
+	if (!temp)
+		cout << "Khong tim thay khach hang\n";
 }
 
 void Menu()
 {
+Menu:
 	cout << "..............................." << endl;
 	cout << "Xu ly giao dich ngan hang don gian\n";
-	
+	cout << "Chon chuc nang can thuc hien: \n";
+	cout << "[1] Quan ly khach hang\n";
+	cout << "[2] Thuc hien giao dich\n";
+	cout << "[3] Thoat\n";
+	int chose;
+	fflush(stdin);
+	cin >> chose;
+	switch (chose)
+	{
+	case 1:
+		Menu_KhachHang();
+		goto Menu;
+		break;
+	case 2:
+		ThucHienGD();
+		goto Menu;
+		break;
+	case 3:
+		return;
+	default:
+		goto Menu;
+		break;
+	}
+}
+void Menu_KhachHang()
+{
+Menu:
+	cout << "..............................." << endl;
+	cout << "Quan ly khach hang:\n"
+		 << "Chon chuc nang can thuc hien:\n";
+	cout << "[1] Them Khach hang" << endl;
+	cout << "[2] Xoa Khach hang" << endl;
+	cout << "[3] In Danh sach khach hang\n";
+	cout << "[4] In sao ke giao dich\n";
+	cout << "[5] Thoat\n";
+	int chose;
+	fflush(stdin);
+	cin >> chose;
+	switch (chose)
+	{
+	case 1:
+		KhachHang kh;
+		kh = ThemKHtuBP();
+		ThemKH(kh);
+		goto Menu;
+		break;
+	case 2:
+		cout << "Nhap ma khach hang can xoa: ";
+		char Ma[4];
+		fflush(stdin);
+		gets(Ma);
+		XoaKH(Ma);
+		goto Menu;
+		break;
+	case 3:
+		InDSKH();
+		goto Menu;
+		break;
+	case 4:
+		SaoKe();
+		break;
+	case 5:
+		return;
+	default:
+		goto Menu;
+		break;
+	}
 }
