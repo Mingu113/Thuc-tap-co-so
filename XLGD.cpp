@@ -16,20 +16,20 @@ const char *PathTransaction = "transaction.dat";
 // struct Khách hàng gồm Mã khách hàng, tên khách hàng, số dư
 typedef struct
 {
-	char MaKH[4]; // Mã Khách hàng [4]
+	char MaKH[4];	// Mã Khách hàng [4]
 	char TenKH[50]; // Tên khách hàng [5]
-	float sodu; // Số dư tài khoản float
+	float sodu;		// Số dư tài khoản float
 } KhachHang;
 
 // struct Giao dịch gồm Mã giao dịch, mã khách hàng, lượng tiền, loại giao dịch, ngày giao dịch
 typedef struct
 {
 	unsigned int MaGD; // Mã giao dịch tự động tăng dần theo một đơn vị
-	char MaKH[4]; // Mã khách hàng giao dịch [4]
-	float LuongTien; // Lượng tiền
-	int LoaiGD; // 1: Rút tiền, 2: Gửi tiền
-	float SoDu; // Số dư hiện tại sau khi giao dịch của khách hàng
-	time_t NgayGD; // Thời gian giao dịch
+	char MaKH[4];	   // Mã khách hàng giao dịch [4]
+	float LuongTien;   // Lượng tiền
+	int LoaiGD;		   // 1: Rút tiền, 2: Gửi tiền
+	float SoDu;		   // Số dư hiện tại sau khi giao dịch của khách hàng
+	time_t NgayGD;	   // Thời gian giao dịch
 } GiaoDich;
 // Vector Danh sách khách hàng
 vector<KhachHang> DSKhachHang;
@@ -101,8 +101,9 @@ int main()
 	DocGDtuFile();
 	DocKHtuFile();
 	Menu();
-	int a;
-	cin >> a;
+	fflush(stdin);
+	getchar();
+	system("cls");
 }
 // Hàm
 
@@ -381,18 +382,30 @@ Menu:
 	cout << "[2] Thuc hien giao dich\n";
 	cout << "[3] Thoat\n";
 	cout << "Nhap mot so: ";
-	int chose;
+	int choice;
 	fflush(stdin);
-	cin >> chose;
-	switch (chose)
+	cin >> choice;
+	switch (choice)
 	{
 	case 1:
+		fflush(stdin);
+		system("cls");
+
 		Menu_KhachHang();
+
+		fflush(stdin);
+		getchar();
 		system("cls");
 		goto Menu;
 		break;
 	case 2:
+		fflush(stdin);
+		system("cls");
+
 		ThucHienGD();
+
+		fflush(stdin);
+		getchar();
 		system("cls");
 		goto Menu;
 		break;
@@ -417,15 +430,20 @@ Menu:
 	cout << "[4] In sao ke giao dich\n";
 	cout << "[5] Thoat\n";
 	cout << "Nhap mot so: ";
-	int chose;
+	int choice;
 	fflush(stdin);
-	cin >> chose;
-	switch (chose)
+	cin >> choice;
+	switch (choice)
 	{
 	case 1:
+		fflush(stdin);
+		system("cls");
+
 		KhachHang kh;
 		kh = ThemKHtuBP();
 		ThemKH(kh);
+
+		fflush(stdin);
 		system("cls");
 		goto Menu;
 		break;
@@ -435,17 +453,30 @@ Menu:
 		fflush(stdin);
 		gets(Ma);
 		XoaKH(Ma);
+		
+		fflush(stdin);
+		getchar();
 		system("cls");
 		goto Menu;
 		break;
 	case 3:
+		fflush(stdin);
+		system("cls");
+
 		InDSKH();
+		
+		fflush(stdin);
 		getchar();
 		system("cls");
 		goto Menu;
 		break;
 	case 4:
+		fflush(stdin);
+		system("cls");
+
 		SaoKe();
+		
+		fflush(stdin);
 		getchar();
 		system("cls");
 		break;
