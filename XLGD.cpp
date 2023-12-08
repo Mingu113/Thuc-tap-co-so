@@ -16,20 +16,20 @@ const char *PathTransaction = "transaction.dat";
 // struct Khách hàng gồm Mã khách hàng, tên khách hàng, số dư
 typedef struct
 {
-	char MaKH[4];
-	char TenKH[50];
-	float sodu;
+	char MaKH[4]; // Mã Khách hàng [4]
+	char TenKH[50]; // Tên khách hàng [5]
+	float sodu; // Số dư tài khoản float
 } KhachHang;
 
 // struct Giao dịch gồm Mã giao dịch, mã khách hàng, lượng tiền, loại giao dịch, ngày giao dịch
 typedef struct
 {
-	unsigned int MaGD;
-	char MaKH[4];
-	float LuongTien;
+	unsigned int MaGD; // Mã giao dịch tự động tăng dần theo một đơn vị
+	char MaKH[4]; // Mã khách hàng giao dịch [4]
+	float LuongTien; // Lượng tiền
 	int LoaiGD; // 1: Rút tiền, 2: Gửi tiền
 	float SoDu; // Số dư hiện tại sau khi giao dịch của khách hàng
-	time_t NgayGD;
+	time_t NgayGD; // Thời gian giao dịch
 } GiaoDich;
 // Vector Danh sách khách hàng
 vector<KhachHang> DSKhachHang;
@@ -120,6 +120,7 @@ bool ThemKH(KhachHang kh)
 
 KhachHang ThemKHtuBP()
 {
+	cout << "----------------------------" << endl;
 	KhachHang kh;
 	cout << "Nhap ma khach hang: ";
 	fflush(stdin);
@@ -134,9 +135,10 @@ KhachHang ThemKHtuBP()
 
 void InKH(KhachHang kh)
 {
-	wcout << kh.MaKH << "\n"
-		  << kh.TenKH << "\n"
-		  << kh.sodu << endl;
+	cout << "----------------------------" << endl;
+	cout << "Ma khach hang: " << kh.MaKH << "\n"
+		 << "Ten khach hang: " << kh.TenKH << "\n"
+		 << "So du khach hang: " << kh.sodu << endl;
 }
 
 void GhiKHvaoFile()
@@ -261,6 +263,7 @@ bool ThemGD(GiaoDich gd)
 
 void ThucHienGD()
 {
+	cout << "----------------------------" << endl;
 	// Tìm khách hàng theo mã
 	cout << "Nhan huy de ngung" << endl;
 NhapMa:
@@ -339,7 +342,12 @@ void InGD(GiaoDich gd)
 	cout << "Ma giao dich: " << gd.MaGD << endl;
 	cout << "Ma khach hang: " << gd.MaKH << endl;
 	cout << "Luong tien: " << gd.LuongTien << endl;
-	cout << "Loai giao dich: " << (gd.LoaiGD == 1) ? "Rut tien\n" : "Gui tien\n";
+	cout << "Loai giao dich: ";
+	if (gd.LoaiGD == 1)
+		cout << "Rut tien";
+	else
+		cout << "Gui tien";
+	cout << endl;
 	cout << "So du hien tai: " << gd.SoDu << endl;
 	cout << "Thoi gian giao dich: " << asctime(localtime(&gd.NgayGD)) << endl;
 }
@@ -372,6 +380,7 @@ Menu:
 	cout << "[1] Quan ly khach hang\n";
 	cout << "[2] Thuc hien giao dich\n";
 	cout << "[3] Thoat\n";
+	cout << "Nhap mot so: ";
 	int chose;
 	fflush(stdin);
 	cin >> chose;
@@ -379,15 +388,19 @@ Menu:
 	{
 	case 1:
 		Menu_KhachHang();
+		system("cls");
 		goto Menu;
 		break;
 	case 2:
 		ThucHienGD();
+		system("cls");
 		goto Menu;
 		break;
 	case 3:
+		system("cls");
 		return;
 	default:
+		system("cls");
 		goto Menu;
 		break;
 	}
@@ -403,6 +416,7 @@ Menu:
 	cout << "[3] In Danh sach khach hang\n";
 	cout << "[4] In sao ke giao dich\n";
 	cout << "[5] Thoat\n";
+	cout << "Nhap mot so: ";
 	int chose;
 	fflush(stdin);
 	cin >> chose;
@@ -412,6 +426,7 @@ Menu:
 		KhachHang kh;
 		kh = ThemKHtuBP();
 		ThemKH(kh);
+		system("cls");
 		goto Menu;
 		break;
 	case 2:
@@ -420,18 +435,25 @@ Menu:
 		fflush(stdin);
 		gets(Ma);
 		XoaKH(Ma);
+		system("cls");
 		goto Menu;
 		break;
 	case 3:
 		InDSKH();
+		getchar();
+		system("cls");
 		goto Menu;
 		break;
 	case 4:
 		SaoKe();
+		getchar();
+		system("cls");
 		break;
 	case 5:
+		system("cls");
 		return;
 	default:
+		system("cls");
 		goto Menu;
 		break;
 	}
