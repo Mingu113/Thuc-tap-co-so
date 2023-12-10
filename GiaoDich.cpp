@@ -1,7 +1,6 @@
 #define _XOPEN_SOURCE = 700 // cho putenv
 #include <iostream>
 #include <stdlib.h> // cho putenv
-#include <time.h>
 #include <cstring>
 #include <fstream>
 #include <algorithm>
