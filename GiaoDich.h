@@ -1,6 +1,7 @@
 #ifndef GIAODICH_H
 #define GIAODICH_H
-#include<vector>
+#include <vector>
+#include <ctime>
 // struct Giao dịch gồm Mã giao dịch, mã khách hàng, lượng tiền, loại giao dịch, ngày giao dịch
 typedef struct
 {
@@ -12,7 +13,7 @@ typedef struct
 	time_t NgayGD;	   // Thời gian giao dịch
 } GiaoDich;
 // Vector Danh sách giao dịch
-extern std::vector<GiaoDich> DSGiaoDich;
+std::vector<GiaoDich> DSGiaoDich; // -> KHÔNG ĐƯỢC QUÊN KHI SỬ DỤNG MỘT ĐỐI TƯỢNG NÀO ĐÓ CHO NHIỀU FILE. SỬ DỤNG EXTERN
 // Ghi giao dịch vào file
 void GhiGDvaoFile();
 

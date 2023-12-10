@@ -9,7 +9,7 @@ using namespace std;
 int main()
 {
 	// Chỉnh timezone sang Việt Nam
-	putenv("TZ=Asia/Vietnam");
+	// putenv("TZ=Asia/Vietnam");
 	DocGDtuFile();
 	DocKHtuFile();
 	Menu();

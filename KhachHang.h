@@ -9,7 +9,7 @@ typedef struct
 	float sodu;		// Số dư tài khoản float
 } KhachHang;
 // Vector Danh sách khách hàng
-extern std::vector<KhachHang> DSKhachHang;
+extern std::vector<KhachHang> DSKhachHang; // -> KHÔNG ĐƯỢC QUÊN KHI SỬ DỤNG MỘT ĐỐI TƯỢNG NÀO ĐÓ CHO NHIỀU FILE. SỬ DỤNG EXTERN
 
 // Ghi danh sách khách hàng vào file
 void GhiKHvaoFile();
