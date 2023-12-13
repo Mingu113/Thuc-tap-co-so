@@ -1,9 +1,8 @@
 #include <iostream>
-#include"KhachHang.h"
+#include "KhachHang.h"
 #include "GiaoDich.h"
 using namespace std;
 // Khai báo struct
-
 
 // Hàm main
 int main()
@@ -20,6 +19,7 @@ int main()
 
 void Menu()
 {
+	fflush(stdin);
 Menu:
 	cout << "..............................." << endl;
 	cout << "Xu ly giao dich ngan hang don gian\n";
@@ -66,6 +66,7 @@ Menu:
 }
 void Menu_KhachHang()
 {
+	fflush(stdin);
 Menu:
 	cout << "..............................." << endl;
 	cout << "Quan ly khach hang:\n"
@@ -75,7 +76,7 @@ Menu:
 	cout << "[3] In Danh sach khach hang\n";
 	cout << "[4] In sao ke giao dich\n";
 	cout << "[5] Thoat\n";
-	
+
 	cout << "Nhap mot so: ";
 	int choice;
 	fflush(stdin);
@@ -100,7 +101,7 @@ Menu:
 		fflush(stdin);
 		gets(Ma);
 		XoaKH(Ma);
-		
+
 		fflush(stdin);
 		getchar();
 		system("cls");
@@ -111,7 +112,7 @@ Menu:
 		system("cls");
 
 		InDSKH();
-		
+
 		fflush(stdin);
 		getchar();
 		system("cls");
@@ -122,7 +123,7 @@ Menu:
 		system("cls");
 
 		SaoKe();
-		
+
 		fflush(stdin);
 		getchar();
 		system("cls");

@@ -27,9 +27,10 @@ KhachHang ThemKHtuBP()
 {
 	cout << "----------------------------" << endl;
 	KhachHang kh;
-	cout << "Nhap ma khach hang: ";
-	fflush(stdin);
-	gets(kh.MaKH);
+	// cout << "Nhap ma khach hang: ";
+	// fflush(stdin);
+	// gets(kh.MaKH);
+	itoa(DSKhachHang.size() + 1, kh.MaKH, 10);
 	cout << "Nhap ten khach hang: ";
 	fflush(stdin);
 	gets(kh.TenKH);

@@ -154,10 +154,10 @@ void SaoKe()
 	{
 		if (strcmp(DSGiaoDich[i].MaKH, Ma) == 0)
 		{
-			InGD(DSGiaoDich[i]);
 			temp = true;
+			InGD(DSGiaoDich[i]);
 		}
 	}
 	if (!temp)
-		cout << "Khong tim thay khach hang\n";
+		cout << "Khong co giao dich nao\n";
 }
