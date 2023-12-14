@@ -27,10 +27,8 @@ KhachHang ThemKHtuBP()
 {
 	cout << "----------------------------" << endl;
 	KhachHang kh;
-	// cout << "Nhap ma khach hang: ";
-	// fflush(stdin);
-	// gets(kh.MaKH);
-	itoa(DSKhachHang.size() + 1, kh.MaKH, 10);
+	// Lấy mã khách hàng của khách hàng cuối cùng trong danh sách khách hàng, +1
+	itoa(atoi(DSKhachHang[DSKhachHang.size()].MaKH) + 1, kh.MaKH, 10);
 	cout << "Nhap ten khach hang: ";
 	fflush(stdin);
 	gets(kh.TenKH);

@@ -20,6 +20,7 @@ int main()
 void Menu()
 {
 	fflush(stdin);
+	system("cls");
 Menu:
 	cout << "..............................." << endl;
 	cout << "Xu ly giao dich ngan hang don gian\n";
@@ -34,8 +35,6 @@ Menu:
 	switch (choice)
 	{
 	case 1:
-		fflush(stdin);
-		system("cls");
 
 		Menu_KhachHang();
 
@@ -56,10 +55,8 @@ Menu:
 		goto Menu;
 		break;
 	case 3:
-		system("cls");
 		return;
 	default:
-		system("cls");
 		goto Menu;
 		break;
 	}
@@ -67,6 +64,7 @@ Menu:
 void Menu_KhachHang()
 {
 	fflush(stdin);
+	system("cls");
 Menu:
 	cout << "..............................." << endl;
 	cout << "Quan ly khach hang:\n"
@@ -81,6 +79,7 @@ Menu:
 	int choice;
 	fflush(stdin);
 	cin >> choice;
+	fflush(stdin);
 	switch (choice)
 	{
 	case 1:
@@ -129,10 +128,8 @@ Menu:
 		system("cls");
 		break;
 	case 5:
-		system("cls");
 		return;
 	default:
-		system("cls");
 		goto Menu;
 		break;
 	}
