@@ -30,7 +30,6 @@ Menu:
 	cout << "[3] Thoat\n";
 	cout << "Nhap mot so: ";
 	int choice;
-	fflush(stdin);
 	cin >> choice;
 	switch (choice)
 	{
@@ -75,9 +74,7 @@ Menu:
 
 	cout << "Nhap mot so: ";
 	int choice;
-	fflush(stdin);
 	cin >> choice;
-	fflush(stdin);
 	switch (choice)
 	{
 	case 1:

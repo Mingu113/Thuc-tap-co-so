@@ -149,7 +149,7 @@ void SaoKe()
 	{
 		if (i == 0)
 			cout << "______________________________________________________________________________________________________________________\n"
-					"|  Ma GD  |   Ma KH  |      Luong tien             |   Loai GD  |      So du hien tai      |    Thoi gian giao dich  |\n"
+					"|  Ma GD  |   Ma KH  |      Luong tien  (VND)      |   Loai GD  |      So du hien tai (VND)|    Thoi gian giao dich  |\n"
 					"|_________|__________|_____________________________|____________|__________________________|_________________________|\n";
 		if (strcmp(DSGiaoDich[i].MaKH, Ma) == 0)
 		{
