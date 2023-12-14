@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstring>
 #include <fstream>
+#include <iomanip>
 #include"KhachHang.h"
 using namespace std;
 // Đường dẫn tập tin khách hàng
@@ -42,7 +43,7 @@ void InKH(KhachHang kh)
 	cout << "----------------------------" << endl;
 	cout << "Ma khach hang: " << kh.MaKH << "\n"
 		 << "Ten khach hang: " << kh.TenKH << "\n"
-		 << "So du khach hang: " << kh.sodu << endl;
+		 << "So du khach hang: " << setprecision(5) << kh.sodu << endl;
 }
 
 void GhiKHvaoFile()

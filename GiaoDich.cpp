@@ -5,6 +5,7 @@
 #include <cstring>
 #include <fstream>
 #include <algorithm>
+#include <iomanip>
 #include "GiaoDich.h"
 #include "KhachHang.h"
 using namespace std;
@@ -139,7 +140,7 @@ void InGD(GiaoDich gd)
 	else
 		cout << "Gui tien";
 	cout << endl;
-	cout << "So du hien tai: " << gd.SoDu << endl;
+	cout << "So du hien tai: " << setprecision(5) << gd.SoDu << endl;
 	cout << "Thoi gian giao dich: " << asctime(localtime(&gd.NgayGD)) << endl;
 }
 
