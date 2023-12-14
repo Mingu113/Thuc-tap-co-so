@@ -2,7 +2,8 @@
 #include <cstring>
 #include <fstream>
 #include <iomanip>
-#include"KhachHang.h"
+#include <sstream>
+#include "KhachHang.h"
 using namespace std;
 // Đường dẫn tập tin khách hàng
 const char *PathCustomer = "customer.dat";
@@ -40,10 +41,9 @@ KhachHang ThemKHtuBP()
 
 void InKH(KhachHang kh)
 {
-	cout << "----------------------------" << endl;
-	cout << "Ma khach hang: " << kh.MaKH << "\n"
-		 << "Ten khach hang: " << kh.TenKH << "\n"
-		 << "So du khach hang: " << setprecision(5) << kh.sodu << endl;
+	cout << left << "|" << setw(6) << kh.MaKH
+		 << "|" << setw(19) << kh.TenKH
+		 << "|" << setw(26) << fixed << setprecision(2) << kh.sodu << "|" << endl;
 }
 
 void GhiKHvaoFile()
@@ -64,7 +64,13 @@ void InDSKH()
 {
 	for (int i = 0; i < DSKhachHang.size(); i++)
 	{
+		if (i == 0)
+			cout << "_______________________________________________________\n"
+					"|  Ma  |   Ten Khach hang  |      So tien             |\n"
+					"|______|___________________|__________________________|\n";
 		InKH(DSKhachHang[i]);
+		if (i == DSKhachHang.size() - 1)
+			cout << "|_____________________________________________________|\n";
 	}
 }
 

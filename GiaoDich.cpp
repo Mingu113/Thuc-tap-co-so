@@ -130,18 +130,13 @@ NhapLuongTien:
 
 void InGD(GiaoDich gd)
 {
-	cout << "----------------------------" << endl;
-	cout << "Ma giao dich: " << gd.MaGD << endl;
-	cout << "Ma khach hang: " << gd.MaKH << endl;
-	cout << "Luong tien: " << gd.LuongTien << endl;
-	cout << "Loai giao dich: ";
-	if (gd.LoaiGD == 1)
-		cout << "Rut tien";
-	else
-		cout << "Gui tien";
-	cout << endl;
-	cout << "So du hien tai: " << setprecision(5) << gd.SoDu << endl;
-	cout << "Thoi gian giao dich: " << asctime(localtime(&gd.NgayGD)) << endl;
+	cout << left << "|" << setw(9) << gd.MaGD
+	<< "|" << setw(10) << gd.MaKH
+	<< "|" << setw(29) << gd.LuongTien
+	<< "|" << setw(12) <<
+	(gd.LoaiGD == 1 ? "Rut tien" : "Gui tien")
+	<< "|" << setw(26) << fixed << setprecision(2) << gd.SoDu
+	<< "|" << setw(25) << asctime(localtime(&gd.NgayGD));
 }
 
 void SaoKe()
@@ -153,6 +148,10 @@ void SaoKe()
 	cin >> Ma;
 	for (int i = 0; i < DSGiaoDich.size(); i++)
 	{
+		if (i == 0)
+			cout << "______________________________________________________________________________________________________________________\n"
+					"|  Ma GD  |   Ma KH  |      Luong tien             |   Loai GD  |      So du hien tai      |    Thoi gian giao dich  |\n"
+					"|_________|__________|_____________________________|____________|__________________________|_________________________|\n";
 		if (strcmp(DSGiaoDich[i].MaKH, Ma) == 0)
 		{
 			temp = true;
@@ -161,4 +160,5 @@ void SaoKe()
 	}
 	if (!temp)
 		cout << "Khong co giao dich nao\n";
+		else cout << "|_________|__________|_____________________________|____________|__________________________|_________________________|\n";
 }
