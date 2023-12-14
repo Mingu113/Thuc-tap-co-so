@@ -40,7 +40,6 @@ Menu:
 
 		fflush(stdin);
 		getchar();
-		system("cls");
 		goto Menu;
 		break;
 	case 2:
@@ -51,7 +50,6 @@ Menu:
 
 		fflush(stdin);
 		getchar();
-		system("cls");
 		goto Menu;
 		break;
 	case 3:
@@ -90,8 +88,6 @@ Menu:
 		kh = ThemKHtuBP();
 		ThemKH(kh);
 
-		fflush(stdin);
-		system("cls");
 		goto Menu;
 		break;
 	case 2:
@@ -103,7 +99,6 @@ Menu:
 
 		fflush(stdin);
 		getchar();
-		system("cls");
 		goto Menu;
 		break;
 	case 3:
@@ -114,7 +109,6 @@ Menu:
 
 		fflush(stdin);
 		getchar();
-		system("cls");
 		goto Menu;
 		break;
 	case 4:
@@ -125,7 +119,6 @@ Menu:
 
 		fflush(stdin);
 		getchar();
-		system("cls");
 		break;
 	case 5:
 		return;

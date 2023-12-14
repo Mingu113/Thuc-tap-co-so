@@ -131,12 +131,11 @@ NhapLuongTien:
 void InGD(GiaoDich gd)
 {
 	cout << left << "|" << setw(9) << gd.MaGD
-	<< "|" << setw(10) << gd.MaKH
-	<< "|" << setw(29) << gd.LuongTien
-	<< "|" << setw(12) <<
-	(gd.LoaiGD == 1 ? "Rut tien" : "Gui tien")
-	<< "|" << setw(26) << fixed << setprecision(2) << gd.SoDu
-	<< "|" << setw(25) << asctime(localtime(&gd.NgayGD));
+		 << "|" << setw(10) << gd.MaKH
+		 << "|" << setw(29) << gd.LuongTien
+		 << "|" << setw(12) << (gd.LoaiGD == 1 ? "Rut tien" : "Gui tien")
+		 << "|" << setw(26) << fixed << setprecision(2) << gd.SoDu
+		 << "|" << setw(25) << asctime(localtime(&gd.NgayGD));
 }
 
 void SaoKe()
@@ -160,5 +159,6 @@ void SaoKe()
 	}
 	if (!temp)
 		cout << "Khong co giao dich nao\n";
-		else cout << "|_________|__________|_____________________________|____________|__________________________|_________________________|\n";
+	else
+		cout << "|_________|__________|_____________________________|____________|__________________________|_________________________|\n";
 }

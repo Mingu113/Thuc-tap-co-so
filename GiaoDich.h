@@ -13,7 +13,7 @@ typedef struct
 	time_t NgayGD;	   // Thời gian giao dịch
 } GiaoDich;
 // Vector Danh sách giao dịch
-std::vector<GiaoDich> DSGiaoDich; // -> KHÔNG ĐƯỢC QUÊN KHI SỬ DỤNG MỘT ĐỐI TƯỢNG NÀO ĐÓ CHO NHIỀU FILE. SỬ DỤNG EXTERN
+extern std::vector<GiaoDich> DSGiaoDich; // -> KHÔNG ĐƯỢC QUÊN KHI SỬ DỤNG MỘT ĐỐI TƯỢNG NÀO ĐÓ CHO NHIỀU FILE. SỬ DỤNG EXTERN
 // Ghi giao dịch vào file
 void GhiGDvaoFile();
 

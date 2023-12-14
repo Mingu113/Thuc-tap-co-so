@@ -16,10 +16,8 @@ bool operator==(const KhachHang &a, const KhachHang &b)
 bool ThemKH(KhachHang kh)
 {
 	for (int i = 0; i < DSKhachHang.size(); i++)
-	{
 		if (strcmp(kh.MaKH, DSKhachHang[i].MaKH) == 0)
 			return false;
-	}
 	DSKhachHang.push_back(kh);
 	GhiKHvaoFile();
 	return true;
@@ -27,7 +25,6 @@ bool ThemKH(KhachHang kh)
 
 KhachHang ThemKHtuBP()
 {
-	cout << "----------------------------" << endl;
 	KhachHang kh;
 	// Lấy mã khách hàng của khách hàng cuối cùng trong danh sách khách hàng, +1
 	itoa(atoi(DSKhachHang[DSKhachHang.size()].MaKH) + 1, kh.MaKH, 10);
@@ -43,7 +40,7 @@ void InKH(KhachHang kh)
 {
 	cout << left << "|" << setw(6) << kh.MaKH
 		 << "|" << setw(19) << kh.TenKH
-		 << "|" << setw(26) << fixed << setprecision(2) << kh.sodu << "|" << endl;
+		 << "|" << setw(26) << put_money(kh.sodu, true) << "|" << endl;
 }
 
 void GhiKHvaoFile()
@@ -70,7 +67,7 @@ void InDSKH()
 					"|______|___________________|__________________________|\n";
 		InKH(DSKhachHang[i]);
 		if (i == DSKhachHang.size() - 1)
-			cout << "|_____________________________________________________|\n";
+			cout << "|______|___________________|__________________________|\n";
 	}
 }
 
