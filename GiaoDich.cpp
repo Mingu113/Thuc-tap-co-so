@@ -1,7 +1,5 @@
-#define _XOPEN_SOURCE = 700 // cho putenv
 #include <iostream>
-#include <stdlib.h> // cho putenv
-#include <time.h>
+#include <stdlib.h> 
 #include <cstring>
 #include <fstream>
 #include <algorithm>
@@ -12,6 +10,7 @@ using namespace std;
 // Đường dẫn tập tin giao dịch
 const char *PathTransaction = "transaction.dat";
 vector<KhachHang> DSKhachHang;
+vector<GiaoDich> DSGiaoDich;
 // Khai báo hàm
 
 void GhiGDvaoFile()
@@ -138,25 +137,34 @@ void InGD(GiaoDich gd)
 		 << "|" << setw(25) << asctime(localtime(&gd.NgayGD));
 }
 
-void SaoKe()
+void SaoKe(bool InToanBo)
 {
 	bool temp = false;
-	cout << "Nhap ma khach hang can lap sao ke: ";
-	fflush(stdin);
-	char Ma[4];
-	cin >> Ma;
-	for (int i = 0; i < DSGiaoDich.size(); i++)
+	cout << "______________________________________________________________________________________________________________________\n"
+			"|  Ma GD  |   Ma KH  |      Luong tien  (VND)      |   Loai GD  |      So du hien tai (VND)|    Thoi gian giao dich  |\n"
+			"|_________|__________|_____________________________|____________|__________________________|_________________________|\n";
+	if (!InToanBo)
 	{
-		if (i == 0)
-			cout << "______________________________________________________________________________________________________________________\n"
-					"|  Ma GD  |   Ma KH  |      Luong tien  (VND)      |   Loai GD  |      So du hien tai (VND)|    Thoi gian giao dich  |\n"
-					"|_________|__________|_____________________________|____________|__________________________|_________________________|\n";
-		if (strcmp(DSGiaoDich[i].MaKH, Ma) == 0)
+		char Ma[4];
+		cout << "Nhap ma khach hang can lap sao ke: ";
+		fflush(stdin);
+		cin >> Ma;
+		for (int i = 0; i < DSGiaoDich.size(); i++)
 		{
-			temp = true;
-			InGD(DSGiaoDich[i]);
+			if (strcmp(DSGiaoDich[i].MaKH, Ma) == 0)
+			{
+				temp = true;
+				InGD(DSGiaoDich[i]);
+			}
 		}
 	}
+	else
+	{
+		temp = true;
+		for (int i = 0; i < DSGiaoDich.size(); i++)
+			InGD(DSGiaoDich[i]);
+	}
+
 	if (!temp)
 		cout << "Khong co giao dich nao\n";
 	else

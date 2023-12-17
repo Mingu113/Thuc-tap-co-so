@@ -1,3 +1,4 @@
+#pragma once
 #ifndef KHACHHANG_H
 #define KHACHHANG_H
 #include<vector>

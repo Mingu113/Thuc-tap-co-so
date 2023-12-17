@@ -1,3 +1,4 @@
+#pragma once
 #ifndef GIAODICH_H
 #define GIAODICH_H
 #include <vector>
@@ -30,7 +31,7 @@ void ThucHienGD();
 void InGD(GiaoDich gd);
 
 // Sao kê giao dịch của khách hàng
-void SaoKe();
+void SaoKe(bool InToanBo = false);
 
 // Menu
 void Menu();
