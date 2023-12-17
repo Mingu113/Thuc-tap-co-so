@@ -1,3 +1,4 @@
+// Use C because other was written in C++ and I don't want for this one to be compiled too
 #include <stdio.h>
 #include <stdlib.h>
 int main()
@@ -9,7 +10,7 @@ int main()
     if (system(command1) == 0)
     {
         char command2[] = "g++ *.o -o XLGD";
-        printf("Linking .o files to executable XLGD: ");
+        printf("Linking .o files into executable XLGD: ");
         puts(command2);
         if (system(command2) == 0)
         {
