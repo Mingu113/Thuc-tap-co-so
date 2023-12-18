@@ -1,5 +1,5 @@
 #include <iostream>
-#include <stdlib.h> 
+#include <stdlib.h>
 #include <cstring>
 #include <fstream>
 #include <algorithm>
@@ -73,6 +73,7 @@ NhapMa:
 		{
 			kh = DSKhachHang[i];
 			strcpy(gd.MaKH, kh.MaKH);
+			cout << "Khach hang: " << kh.TenKH << endl;
 			goto NhapLoaiGD;
 			break;
 		}
@@ -82,26 +83,21 @@ NhapMa:
 // Nhập loại giao dịch
 NhapLoaiGD:
 	int LoaiGD;
+
+	string GD_Type[] = {"Rut tien", "Gui tien", "Huy"};
 	cout << "1: Rut tien\n2: Gui tien\n3: Huy\n"
 		 << "Nhap loai giao dich: ";
 	cin >> LoaiGD;
-	switch (LoaiGD)
-	{
-	case 1:
-		// Rút tiền
-		gd.LoaiGD = 1;
-		break;
-	case 2:
-		// Gửi tiền
-		gd.LoaiGD = 2;
-		break;
-	case 3:
+	if (LoaiGD >= 1 && LoaiGD <= 2)
+		gd.LoaiGD = LoaiGD;
+	else if (LoaiGD == 3)
 		return;
-	default:
-		cout << "Nhap lai loai giao dich" << endl;
+	else
+	{
+		cout << "Nhap lai loai giao dich";
 		goto NhapLoaiGD;
-		break;
 	}
+	cout << "Loai giao dich: " << GD_Type[LoaiGD - 1] << endl;
 // Nhập lượng tiền
 NhapLuongTien:
 	cout << "Nhap luong tien can giao dich: ";
@@ -129,20 +125,21 @@ NhapLuongTien:
 
 void InGD(GiaoDich gd)
 {
+	char buffer[32];
+	tm ThoiGian;
+	localtime_s(&ThoiGian, &gd.NgayGD);
+	strftime(buffer, sizeof(buffer), "%H:%M %d/%m/%Y ", &ThoiGian);
 	cout << left << "|" << setw(9) << gd.MaGD
 		 << "|" << setw(10) << gd.MaKH
-		 << "|" << setw(29) << gd.LuongTien
+		 << "|" << setw(25) << gd.LuongTien << setw(4) << "VND"
 		 << "|" << setw(12) << (gd.LoaiGD == 1 ? "Rut tien" : "Gui tien")
-		 << "|" << setw(26) << fixed << setprecision(2) << gd.SoDu
-		 << "|" << setw(25) << asctime(localtime(&gd.NgayGD));
+		 << "|" << setw(22) << fixed << setprecision(2) << gd.SoDu << setw(4) << "VND"
+		 << "|" << setw(25) << buffer << "|" << endl;
 }
 
 void SaoKe(bool InToanBo)
 {
 	bool temp = false;
-	cout << "______________________________________________________________________________________________________________________\n"
-			"|  Ma GD  |   Ma KH  |      Luong tien  (VND)      |   Loai GD  |      So du hien tai (VND)|    Thoi gian giao dich  |\n"
-			"|_________|__________|_____________________________|____________|__________________________|_________________________|\n";
 	if (!InToanBo)
 	{
 		char Ma[4];
@@ -151,6 +148,13 @@ void SaoKe(bool InToanBo)
 		cin >> Ma;
 		for (int i = 0; i < DSGiaoDich.size(); i++)
 		{
+			if (i == 0)
+			{
+				cout << "______________________________________________________________________________________________________________________\n"
+						"|  Ma GD  |   Ma KH  |      Luong tien  (VND)      |   Loai GD  |      So du hien tai      |    Thoi gian giao dich  |\n"
+						"|_________|__________|_____________________________|____________|__________________________|_________________________|\n";
+			}
+
 			if (strcmp(DSGiaoDich[i].MaKH, Ma) == 0)
 			{
 				temp = true;
@@ -160,6 +164,9 @@ void SaoKe(bool InToanBo)
 	}
 	else
 	{
+		cout << "______________________________________________________________________________________________________________________\n"
+				"|  Ma GD  |   Ma KH  |      Luong tien  (VND)      |   Loai GD  |      So du hien tai      |    Thoi gian giao dich  |\n"
+				"|_________|__________|_____________________________|____________|__________________________|_________________________|\n";
 		temp = true;
 		for (int i = 0; i < DSGiaoDich.size(); i++)
 			InGD(DSGiaoDich[i]);
@@ -169,4 +176,22 @@ void SaoKe(bool InToanBo)
 		cout << "Khong co giao dich nao\n";
 	else
 		cout << "|_________|__________|_____________________________|____________|__________________________|_________________________|\n";
+}
+
+void XuatSangCSV()
+{
+	ofstream file("GiaoDich.csv");
+	// Viết CSV header
+	file << "Ma GD, MaKH, Luong Tien, Loai GD,So du hien tai,Thoi gian giao dich" << endl;
+	char buffer[32];
+	tm ThoiGian;
+	for (auto &gd : DSGiaoDich)
+	{
+		localtime_s(&ThoiGian, &gd.NgayGD);
+		strftime(buffer, sizeof(buffer), "%H:%M %d/%m/%Y ", &ThoiGian);
+		file << gd.MaGD << "," << gd.MaKH << "," << gd.LuongTien << "," << gd.LoaiGD << "," << gd.SoDu << "," << buffer << endl;
+	}
+	file.close();
+	cout << "Da xuat giao dich sang file CSV\n";
+	system("GiaoDich.csv");
 }

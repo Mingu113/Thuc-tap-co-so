@@ -39,4 +39,7 @@ void Menu();
 // Menu khách hàng
 void Menu_KhachHang();
 
+// Xuất danh sách giao dịch ra một file csv
+void XuatSangCSV();
+
 #endif

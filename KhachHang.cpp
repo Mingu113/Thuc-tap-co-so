@@ -40,7 +40,7 @@ void InKH(KhachHang kh)
 {
 	cout << left << "|" << setw(6) << kh.MaKH
 		 << "|" << setw(19) << kh.TenKH
-		 << "|" << setw(26) << fixed << setprecision(2) << kh.sodu << "|" << endl;
+		 << "|" << setw(22) << fixed << setprecision(2) << kh.sodu << setw(4) << "VND" << "|" << endl;
 }
 
 void GhiKHvaoFile()
@@ -63,7 +63,7 @@ void InDSKH()
 	{
 		if (i == 0)
 			cout << "_______________________________________________________\n"
-					"|  Ma  |   Ten Khach hang  |      So tien (VND)       |\n"
+					"|  Ma  |   Ten Khach hang  |      So tien             |\n"
 					"|______|___________________|__________________________|\n";
 		InKH(DSKhachHang[i]);
 		if (i == DSKhachHang.size() - 1)

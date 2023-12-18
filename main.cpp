@@ -7,8 +7,6 @@ using namespace std;
 // Hàm main
 int main()
 {
-	// Chỉnh timezone sang Việt Nam
-	// putenv("TZ=Asia/Vietnam");
 	DocGDtuFile();
 	DocKHtuFile();
 	Menu();
@@ -19,22 +17,29 @@ int main()
 
 void Menu()
 {
-	fflush(stdin);
-	system("cls");
 Menu:
-	cout << "..............................." << endl;
-	cout << "Xu ly giao dich ngan hang don gian\n";
-	cout << "Chon chuc nang can thuc hien: \n";
-	cout << "[1] Quan ly khach hang\n";
-	cout << "[2] Thuc hien giao dich\n";
-	cout << "[3] Thoat\n";
+	system("cls");
+	string Title[] = {"Xu ly giao dich ngan hang don gian", "Chon chuc nang can thuc hien: "};
+	string Menu[] = {"Quan ly khach hang va giao dich", "Thuc hien giao dich"};
+	for (int i = 0; i < size(Title); i++)
+	{
+		cout << Title[i] << endl;
+	}
+	for (int i = 0; i < size(Menu); i++)
+	{
+		printf("[%d] ", i + 1);
+		cout << Menu[i] << endl;
+	}
+	printf("[%d] ", size(Menu) + 1);
+	cout << "Thoat" << endl;
 	cout << "Nhap mot so: ";
 	int choice;
+	fflush(stdin);
 	cin >> choice;
 	switch (choice)
 	{
 	case 1:
-	system("cls");
+		cout << "Quan ly khach hang va giao dich: " << endl;
 		Menu_KhachHang();
 
 		fflush(stdin);
@@ -42,16 +47,14 @@ Menu:
 		goto Menu;
 		break;
 	case 2:
-		fflush(stdin);
-		system("cls");
-
+		cout << "Thuc hien giao dich: " << endl;
 		ThucHienGD();
 
 		fflush(stdin);
 		getchar();
 		goto Menu;
 		break;
-	case 3:
+	case size(Menu) + 1:
 		return;
 	default:
 		goto Menu;
@@ -60,27 +63,30 @@ Menu:
 }
 void Menu_KhachHang()
 {
-	fflush(stdin);
-	system("cls");
 Menu:
-	cout << "..............................." << endl;
-	cout << "Quan ly khach hang:\n"
-		 << "Chon chuc nang can thuc hien:\n";
-	cout << "[1] Them Khach hang" << endl;
-	cout << "[2] Xoa Khach hang" << endl;
-	cout << "[3] In Danh sach khach hang\n";
-	cout << "[4] In sao ke giao dich\n";
-	cout << "[5] In toan bo giao dich\n";
-	cout << "[6] Thoat\n";
-
-	cout << "Nhap mot so: ";
+	system("cls");
+	string Menu[] = {
+		"Them khach hang",
+		"Xoa Khach hang",
+		"In danh sach khach hang",
+		"In sao ke giao dich",
+		"In toan bo giao dich",
+		"Xuat giao dich sang .CSV",
+	};
+	for (int i = 0; i < size(Menu); i++)
+	{
+		printf("[%d] ", i + 1);
+		cout << Menu[i] << endl;
+	}
+	printf("[%d] ", size(Menu) + 1);
+	cout << "Thoat" << endl;
 	int choice;
+	cout << "Nhap mot so: ";
+	fflush(stdin);
 	cin >> choice;
 	switch (choice)
 	{
 	case 1:
-		fflush(stdin);
-		system("cls");
 
 		KhachHang kh;
 		kh = ThemKHtuBP();
@@ -95,15 +101,15 @@ Menu:
 		gets(Ma);
 		XoaKH(Ma);
 
+		fflush(stdin);
 		getchar();
 		goto Menu;
 		break;
 	case 3:
-		fflush(stdin);
-		system("cls");
 
 		InDSKH();
 
+		fflush(stdin);
 		getchar();
 		goto Menu;
 		break;
@@ -113,16 +119,23 @@ Menu:
 
 		SaoKe();
 
+		fflush(stdin);
 		getchar();
+		goto Menu;
 		break;
 	case 5:
-		fflush(stdin);
-		system("cls");
 
 		SaoKe(true);
 
+		fflush(stdin);
 		getchar();
+		goto Menu;
 	case 6:
+		XuatSangCSV();
+		fflush(stdin);
+		getchar();
+		goto Menu;
+	case size(Menu) + 1:
 		return;
 	default:
 		goto Menu;

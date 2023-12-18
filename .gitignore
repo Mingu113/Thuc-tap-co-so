@@ -4,7 +4,7 @@
 QLDB.cpp
 QLNV.cpp
 *.dat
-
+*.csv
 # Compiled Object files
 *.slo
 *.lo
