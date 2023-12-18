@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdlib.h>
+#include <locale>
 #include <cstring>
 #include <fstream>
 #include <algorithm>
@@ -57,10 +58,10 @@ void ThucHienGD()
 	cout << "----------------------------" << endl;
 	// Tìm khách hàng theo mã
 	cout << "Nhan huy de ngung" << endl;
-NhapMa:
 	GiaoDich gd;
 	KhachHang kh;
 	char TienGD[1024];
+NhapMa:
 	cout << "Nhap ma khach hang: ";
 	fflush(stdin);
 	gets(kh.MaKH);
@@ -83,10 +84,13 @@ NhapMa:
 // Nhập loại giao dịch
 NhapLoaiGD:
 	int LoaiGD;
-
 	string GD_Type[] = {"Rut tien", "Gui tien", "Huy"};
-	cout << "1: Rut tien\n2: Gui tien\n3: Huy\n"
-		 << "Nhap loai giao dich: ";
+	for (int i = 0; i < GD_Type->size(); i++)
+	{
+		cout << GD_Type[i] << endl;
+	}
+	cout << "Chon loai giao dich: ";
+	fflush(stdin);
 	cin >> LoaiGD;
 	if (LoaiGD >= 1 && LoaiGD <= 2)
 		gd.LoaiGD = LoaiGD;
@@ -120,7 +124,7 @@ NhapLuongTien:
 	gd.NgayGD = time(NULL);
 	gd.SoDu = kh.sodu;
 	ThemGD(gd);
-	Menu();
+	return;
 }
 
 void InGD(GiaoDich gd)
@@ -131,7 +135,7 @@ void InGD(GiaoDich gd)
 	strftime(buffer, sizeof(buffer), "%H:%M %d/%m/%Y ", &ThoiGian);
 	cout << left << "|" << setw(9) << gd.MaGD
 		 << "|" << setw(10) << gd.MaKH
-		 << "|" << setw(25) << gd.LuongTien << setw(4) << "VND"
+		 << "|" << setw(25) << fixed << setprecision(2) << gd.LuongTien << setw(4) << "VND"
 		 << "|" << setw(12) << (gd.LoaiGD == 1 ? "Rut tien" : "Gui tien")
 		 << "|" << setw(22) << fixed << setprecision(2) << gd.SoDu << setw(4) << "VND"
 		 << "|" << setw(25) << buffer << "|" << endl;
@@ -143,17 +147,16 @@ void SaoKe(bool InToanBo)
 	if (!InToanBo)
 	{
 		char Ma[4];
-		cout << "Nhap ma khach hang can lap sao ke: ";
+		cout << "Nhap ma khach hang can lap sao ke ";
 		fflush(stdin);
 		cin >> Ma;
+#pragma omp parallel for
 		for (int i = 0; i < DSGiaoDich.size(); i++)
 		{
 			if (i == 0)
-			{
 				cout << "______________________________________________________________________________________________________________________\n"
-						"|  Ma GD  |   Ma KH  |      Luong tien  (VND)      |   Loai GD  |      So du hien tai      |    Thoi gian giao dich  |\n"
+						"|  Ma GD  |   Ma KH  |      Giao dich              |   Loai GD  |      So du hien tai      |    Thoi gian giao dich  |\n"
 						"|_________|__________|_____________________________|____________|__________________________|_________________________|\n";
-			}
 
 			if (strcmp(DSGiaoDich[i].MaKH, Ma) == 0)
 			{
@@ -165,9 +168,10 @@ void SaoKe(bool InToanBo)
 	else
 	{
 		cout << "______________________________________________________________________________________________________________________\n"
-				"|  Ma GD  |   Ma KH  |      Luong tien  (VND)      |   Loai GD  |      So du hien tai      |    Thoi gian giao dich  |\n"
+				"|  Ma GD  |   Ma KH  |      Giao dich              |   Loai GD  |      So du hien tai      |    Thoi gian giao dich  |\n"
 				"|_________|__________|_____________________________|____________|__________________________|_________________________|\n";
 		temp = true;
+#pragma omp parallel for
 		for (int i = 0; i < DSGiaoDich.size(); i++)
 			InGD(DSGiaoDich[i]);
 	}
@@ -178,9 +182,10 @@ void SaoKe(bool InToanBo)
 		cout << "|_________|__________|_____________________________|____________|__________________________|_________________________|\n";
 }
 
-void XuatSangCSV()
+void XuatSangCSV_GD()
 {
-	ofstream file("GiaoDich.csv");
+	char FileName[] = "GiaoDich.csv";
+	ofstream file(FileName);
 	// Viết CSV header
 	file << "Ma GD, MaKH, Luong Tien, Loai GD,So du hien tai,Thoi gian giao dich" << endl;
 	char buffer[32];
@@ -189,9 +194,9 @@ void XuatSangCSV()
 	{
 		localtime_s(&ThoiGian, &gd.NgayGD);
 		strftime(buffer, sizeof(buffer), "%H:%M %d/%m/%Y ", &ThoiGian);
-		file << gd.MaGD << "," << gd.MaKH << "," << gd.LuongTien << "," << gd.LoaiGD << "," << gd.SoDu << "," << buffer << endl;
+		file << gd.MaGD << "," << gd.MaKH << "," << fixed << setprecision(2) << gd.LuongTien
+			 << "," << gd.LoaiGD << "," << fixed << setprecision(2) << gd.SoDu << "," << buffer << endl;
 	}
 	file.close();
-	cout << "Da xuat giao dich sang file CSV\n";
-	system("GiaoDich.csv");
+	cout << "Da xuat giao dich vao file: " << FileName << endl;
 }

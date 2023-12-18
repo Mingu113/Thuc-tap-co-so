@@ -1,8 +1,9 @@
 #include <iostream>
 #include "KhachHang.h"
 #include "GiaoDich.h"
+#include <omp.h>
 using namespace std;
-// Khai báo struct
+// Nguyễn Hoàng Minh
 
 // Hàm main
 int main()
@@ -22,17 +23,21 @@ Menu:
 	string Title[] = {"Xu ly giao dich ngan hang don gian", "Chon chuc nang can thuc hien: "};
 	string Menu[] = {"Quan ly khach hang va giao dich", "Thuc hien giao dich"};
 	for (int i = 0; i < size(Title); i++)
-	{
 		cout << Title[i] << endl;
-	}
-	for (int i = 0; i < size(Menu); i++)
+	int i = 0;
+	while (i <= size(Menu))
 	{
+		if (i == size(Menu))
+		{
+			printf("[%d] ", i + 1);
+			cout << "Thoat" << endl;
+			cout << "Nhap mot so: ";
+			break;
+		}
 		printf("[%d] ", i + 1);
 		cout << Menu[i] << endl;
+		i++;
 	}
-	printf("[%d] ", size(Menu) + 1);
-	cout << "Thoat" << endl;
-	cout << "Nhap mot so: ";
 	int choice;
 	fflush(stdin);
 	cin >> choice;
@@ -49,13 +54,13 @@ Menu:
 	case 2:
 		cout << "Thuc hien giao dich: " << endl;
 		ThucHienGD();
-
 		fflush(stdin);
 		getchar();
 		goto Menu;
 		break;
 	case size(Menu) + 1:
 		return;
+		break;
 	default:
 		goto Menu;
 		break;
@@ -71,27 +76,31 @@ Menu:
 		"In danh sach khach hang",
 		"In sao ke giao dich",
 		"In toan bo giao dich",
-		"Xuat giao dich sang .CSV",
-	};
-	for (int i = 0; i < size(Menu); i++)
+		"Xuat lich su giao dich sang .CSV",
+		"Xuat danh sach khach hang sang .CSV"};
+	int i = 0;
+	while (i <= size(Menu))
 	{
+		if (i == size(Menu))
+		{
+			printf("[%d] ", ++i);
+			cout << "Thoat\n"
+				 << "Nhap mot so: ";
+			break;
+		}
 		printf("[%d] ", i + 1);
 		cout << Menu[i] << endl;
+		i++;
 	}
-	printf("[%d] ", size(Menu) + 1);
-	cout << "Thoat" << endl;
 	int choice;
-	cout << "Nhap mot so: ";
 	fflush(stdin);
 	cin >> choice;
 	switch (choice)
 	{
 	case 1:
-
 		KhachHang kh;
 		kh = ThemKHtuBP();
 		ThemKH(kh);
-
 		goto Menu;
 		break;
 	case 2:
@@ -100,43 +109,41 @@ Menu:
 		fflush(stdin);
 		gets(Ma);
 		XoaKH(Ma);
-
 		fflush(stdin);
 		getchar();
 		goto Menu;
 		break;
 	case 3:
-
 		InDSKH();
-
 		fflush(stdin);
 		getchar();
 		goto Menu;
 		break;
 	case 4:
-		fflush(stdin);
 		system("cls");
-
 		SaoKe();
-
 		fflush(stdin);
 		getchar();
 		goto Menu;
 		break;
 	case 5:
-
 		SaoKe(true);
-
 		fflush(stdin);
 		getchar();
 		goto Menu;
 	case 6:
-		XuatSangCSV();
+		XuatSangCSV_GD();
 		fflush(stdin);
 		getchar();
 		goto Menu;
+	case 7:
+		XuatSangCSV_KH();
+		fflush(stdin);
+		getchar();
+		break;
 	case size(Menu) + 1:
 		return;
+		break;
 	default:
 		goto Menu;
 		break;

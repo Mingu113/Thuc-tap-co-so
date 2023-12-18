@@ -40,6 +40,6 @@ void Menu();
 void Menu_KhachHang();
 
 // Xuất danh sách giao dịch ra một file csv
-void XuatSangCSV();
+void XuatSangCSV_GD();
 
 #endif

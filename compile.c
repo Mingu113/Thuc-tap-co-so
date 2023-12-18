@@ -23,9 +23,6 @@ int main(int argc, char *argv[])
             else
                 return 0;
         }
-        // if fail to execute command system, exit if
     }
-    // if fail to execute command, exit if
-    printf("Fail to execute command, check console, maybe it will display something\n");
     return 0;
 }

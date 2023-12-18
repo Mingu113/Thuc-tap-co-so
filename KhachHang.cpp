@@ -32,6 +32,7 @@ KhachHang ThemKHtuBP()
 	fflush(stdin);
 	gets(kh.TenKH);
 	cout << "Nhap so du khach hang: ";
+	fflush(stdin);
 	cin >> kh.sodu;
 	return kh;
 }
@@ -128,4 +129,19 @@ void DocKHtuFile()
 		fclose(f);
 		DSKhachHang.pop_back();
 	}
+}
+
+void XuatSangCSV_KH()
+{
+	char FileName[] = "KhachHang.csv";
+	ofstream file(FileName);
+	// Viết CSV header
+	file << "Ma KH, Ten KH, So du" << endl;
+	/// Xuất nội dung
+	for (auto &kh : DSKhachHang)
+	{
+		file << kh.MaKH << ", " << kh.TenKH << ", " << fixed << setprecision(2) << kh.sodu << endl;
+	}
+	file.close();
+	cout << "Da xuat danh sach khach hang vao file: " << FileName << endl;
 }

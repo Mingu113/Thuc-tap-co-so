@@ -38,4 +38,6 @@ void InDSKH();
 // So sánh hai khách hàng bằng mã khách hàng
 bool operator==(const KhachHang &a, const KhachHang &b);
 
+// In danh sách khách hàng sang một file csv
+void XuatSangCSV_KH();
 #endif
