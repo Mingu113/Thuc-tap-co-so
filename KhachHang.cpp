@@ -41,7 +41,8 @@ void InKH(KhachHang kh)
 {
 	cout << left << "|" << setw(6) << kh.MaKH
 		 << "|" << setw(19) << kh.TenKH
-		 << "|" << setw(22) << fixed << setprecision(2) << kh.sodu << setw(4) << "VND" << "|" << endl;
+		 << "|" << setw(22) << fixed << setprecision(2) << kh.sodu << setw(4) << "VND"
+		 << "|" << endl;
 }
 
 void GhiKHvaoFile()
@@ -60,6 +61,7 @@ void GhiKHvaoFile()
 
 void InDSKH()
 {
+#pragma omp parallel for
 	for (int i = 0; i < DSKhachHang.size(); i++)
 	{
 		if (i == 0)

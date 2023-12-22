@@ -2,8 +2,13 @@
 #include "KhachHang.h"
 #include "GiaoDich.h"
 #include <omp.h>
+#include <iomanip>
 using namespace std;
 // Nguyễn Hoàng Minh
+// TODO
+/*
+	Thêm trạng thái tài khoản
+*/
 
 // Hàm main
 int main()
@@ -21,22 +26,30 @@ Menu:
 	system("cls");
 	string Title[] = {"Xu ly giao dich ngan hang don gian", "Chon chuc nang can thuc hien: "};
 	string Menu[] = {"Quan ly khach hang va giao dich", "Thuc hien giao dich"};
+	cout << "______________________________________________" << endl;
+
 	for (int i = 0; i < size(Title); i++)
-		cout << Title[i] << endl;
+		cout << "|" << left << setw(44) << Title[i] << "|" << endl;
+	cout << "|____________________________________________|" << endl;
+
 	int i = 0;
+	cout << "____________________________________________" << endl;
+
 	while (i <= size(Menu))
 	{
 		if (i == size(Menu))
 		{
-			printf("[%d] ", i + 1);
-			cout << "Thoat" << endl;
+			cout << left << "|" << setw(3) << i + 1 << "|";
+			cout << setw(40) << "Thoat"
+				 << "|" << endl;
+			cout << "|____________________________________________|" << endl;
 			cout << "Nhap mot so: ";
 			break;
 		}
-		printf("[%d] ", i + 1);
-		cout << Menu[i] << endl;
+		cout << left << "|" << left << setw(3) << i + 1 << "|" << setw(40) << Menu[i] << "|" << endl;
 		i++;
 	}
+
 	int choice;
 	cin >> choice;
 	switch (choice)
@@ -45,7 +58,6 @@ Menu:
 		cout << "Quan ly khach hang va giao dich: " << endl;
 		Menu_KhachHang();
 
-		fflush(stdin);
 		getchar();
 		goto Menu;
 		break;
@@ -77,17 +89,19 @@ Menu:
 		"Xuat lich su giao dich sang .CSV",
 		"Xuat danh sach khach hang sang .CSV"};
 	int i = 0;
+	cout << "______________________________________________" << endl;
 	while (i <= size(Menu))
 	{
 		if (i == size(Menu))
 		{
-			printf("[%d] ", ++i);
-			cout << "Thoat\n"
+			cout << left << "|" << setw(3) << i + 1 << "|"
+				 << setw(40) << "Thoat"
+				 << "|\n";
+			cout << "|____________________________________________|" << endl
 				 << "Nhap mot so: ";
 			break;
 		}
-		printf("[%d] ", i + 1);
-		cout << Menu[i] << endl;
+		cout << left << "|" << setw(3) << i + 1 << "|" << setw(40) << Menu[i] << "|" << endl;
 		i++;
 	}
 	int choice;
@@ -106,7 +120,6 @@ Menu:
 		fflush(stdin);
 		gets(Ma);
 		XoaKH(Ma);
-		fflush(stdin);
 		getchar();
 		goto Menu;
 		break;
@@ -130,12 +143,10 @@ Menu:
 		goto Menu;
 	case 6:
 		XuatSangCSV_GD();
-		fflush(stdin);
 		getchar();
 		goto Menu;
 	case 7:
 		XuatSangCSV_KH();
-		fflush(stdin);
 		getchar();
 		break;
 	case size(Menu) + 1:

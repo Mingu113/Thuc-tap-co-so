@@ -87,7 +87,7 @@ NhapLoaiGD:
 	string GD_Type[] = {"Rut tien", "Gui tien", "Huy"};
 	for (int i = 0; i < size(GD_Type); i++)
 	{
-		cout << "[" << i << "] " << GD_Type[i] << endl;
+		cout << "[" << i + 1 << "] " << GD_Type[i] << endl;
 	}
 	cout << "Chon loai giao dich: ";
 	cin >> LoaiGD;
@@ -123,6 +123,13 @@ NhapLuongTien:
 	gd.NgayGD = time(NULL);
 	gd.SoDu = kh.sodu;
 	ThemGD(gd);
+	// In biến động số dư
+	cout << "Bien dong so du khach hang: " << kh.TenKH << endl;
+	cout << "______________________________________________________________________________________________________________________\n"
+			"|  Ma GD  |   Ma KH  |      Giao dich              |   Loai GD  |      So du hien tai      |    Thoi gian giao dich  |\n"
+			"|_________|__________|_____________________________|____________|__________________________|_________________________|\n";
+	InGD(gd);
+	cout << "|_________|__________|_____________________________|____________|__________________________|_________________________|\n";
 	return;
 }
 
