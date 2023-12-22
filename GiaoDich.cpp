@@ -85,12 +85,11 @@ NhapMa:
 NhapLoaiGD:
 	int LoaiGD;
 	string GD_Type[] = {"Rut tien", "Gui tien", "Huy"};
-	for (int i = 0; i < GD_Type->size(); i++)
+	for (int i = 0; i < size(GD_Type); i++)
 	{
-		cout << GD_Type[i] << endl;
+		cout << "[" << i << "] " << GD_Type[i] << endl;
 	}
 	cout << "Chon loai giao dich: ";
-	fflush(stdin);
 	cin >> LoaiGD;
 	if (LoaiGD >= 1 && LoaiGD <= 2)
 		gd.LoaiGD = LoaiGD;
@@ -198,5 +197,5 @@ void XuatSangCSV_GD()
 			 << "," << gd.LoaiGD << "," << fixed << setprecision(2) << gd.SoDu << "," << buffer << endl;
 	}
 	file.close();
-	cout << "Da xuat giao dich vao file: " << FileName << endl;
+	cout << "Da xuat lich su giao dich vao file: " << FileName << endl;
 }

@@ -20,9 +20,7 @@ int main(int argc, char *argv[])
                 printf("Executing executable");
                 system("XLGD");
             }
-            else
-                return 0;
         }
     }
-    return 0;
+    return 1;
 }

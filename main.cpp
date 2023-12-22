@@ -11,7 +11,6 @@ int main()
 	DocGDtuFile();
 	DocKHtuFile();
 	Menu();
-	fflush(stdin);
 	getchar();
 	system("cls");
 }
@@ -39,7 +38,6 @@ Menu:
 		i++;
 	}
 	int choice;
-	fflush(stdin);
 	cin >> choice;
 	switch (choice)
 	{
@@ -93,7 +91,6 @@ Menu:
 		i++;
 	}
 	int choice;
-	fflush(stdin);
 	cin >> choice;
 	switch (choice)
 	{
