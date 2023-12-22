@@ -8,6 +8,7 @@ using namespace std;
 // TODO
 /*
 	Thêm trạng thái tài khoản
+	Tìm kiếm khách hàng theo tên hoặc mã
 */
 
 // Hàm main
@@ -87,7 +88,8 @@ Menu:
 		"In sao ke giao dich",
 		"In toan bo giao dich",
 		"Xuat lich su giao dich sang .CSV",
-		"Xuat danh sach khach hang sang .CSV"};
+		"Xuat danh sach khach hang sang .CSV",
+		"Tim kiem khach hang"};
 	int i = 0;
 	cout << "______________________________________________" << endl;
 	while (i <= size(Menu))
@@ -147,6 +149,11 @@ Menu:
 		goto Menu;
 	case 7:
 		XuatSangCSV_KH();
+		getchar();
+		goto Menu;
+		break;
+	case 8:
+		TimKiemDSKH();
 		getchar();
 		break;
 	case size(Menu) + 1:

@@ -3,6 +3,8 @@
 #include <fstream>
 #include <iomanip>
 #include <sstream>
+#include <cctype>
+#include <ctype.h>
 #include "KhachHang.h"
 using namespace std;
 // Đường dẫn tập tin khách hàng
@@ -28,6 +30,7 @@ KhachHang ThemKHtuBP()
 	KhachHang kh;
 	// Lấy mã khách hàng của khách hàng cuối cùng trong danh sách khách hàng, +1
 	itoa(atoi(DSKhachHang[DSKhachHang.size()].MaKH) + 1, kh.MaKH, 10);
+	cout << "Ma khach hang: " << kh.MaKH << endl;
 	cout << "Nhap ten khach hang: ";
 	fflush(stdin);
 	gets(kh.TenKH);
@@ -146,4 +149,67 @@ void XuatSangCSV_KH()
 	}
 	file.close();
 	cout << "Da xuat danh sach khach hang vao file: " << FileName << endl;
+}
+void ToLowercase(char* str)
+{
+	#pragma omp parallel for
+	for(int i = 0; str[i] != '\0'; i++)
+	{
+		str[i] = tolower(str[i]);
+	}
+}
+void TimKiemDSKH()
+{
+	// Hien thi lua chon
+	cout << "Tim kiem khach hang: " << endl;
+	cout << "Tim kiem khach hang theo: " << endl;
+	cout << left << setw(5) << "[1]" << setw(10) << "Ten" << endl
+		 << setw(5) << "[2]" << setw(10) << "Ma" << endl;
+	cout << "Chon mot so: ";
+	int choice;
+	cin >> choice;
+	// Thuc hien viec tim kiem sau khi chon
+	KhachHang kh;
+	char Ma[sizeof(kh.MaKH)];
+	char Ten[sizeof(kh.TenKH)];
+	switch (choice)
+	{
+	case 1:
+		cout << "Nhap ten khach hang can tim: ";
+		fflush(stdin);
+		cin.getline(Ten, sizeof(Ten));
+		ToLowercase(Ten);
+		char *found;
+		char temp[sizeof(kh.TenKH)];
+		cout << "_______________________________________________________\n"
+				"|  Ma  |   Ten Khach hang  |      So tien             |\n"
+				"|______|___________________|__________________________|\n";
+#pragma omp parallel for
+		for (auto &khach : DSKhachHang)
+		{
+			strcpy(temp, khach.TenKH);
+			ToLowercase(temp);
+			found = strstr(temp, Ten);
+			if (found)
+				InKH(khach);
+		}
+		free(found);
+		break;
+	case 2:
+		cout << "Nhap ma khach hang can tim: ";
+		cin >> Ma;
+		cout << "_______________________________________________________\n"
+				"|  Ma  |   Ten Khach hang  |      So tien             |\n"
+				"|______|___________________|__________________________|\n";
+#pragma omp parallel for
+		for (auto &khach : DSKhachHang)
+		{
+			if (strcmp(Ma, khach.MaKH) == 0)
+				InKH(khach);
+		}
+		break;
+	default:
+		break;
+	}
+	cout << "|______|___________________|__________________________|\n";
 }

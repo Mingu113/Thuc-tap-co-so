@@ -40,4 +40,7 @@ bool operator==(const KhachHang &a, const KhachHang &b);
 
 // In danh sách khách hàng sang một file csv
 void XuatSangCSV_KH();
+
+// Tìm kiếm và hiển thị các khách hàng trong danh sách
+void TimKiemDSKH();
 #endif
