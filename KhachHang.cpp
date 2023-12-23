@@ -28,7 +28,9 @@ KhachHang ThemKHtuBP()
 {
 	KhachHang kh;
 	// Lấy mã khách hàng của khách hàng cuối cùng trong danh sách khách hàng, +1
-	itoa(atoi(DSKhachHang[DSKhachHang.size()].MaKH) + 1, kh.MaKH, 10);
+	itoa(atoi(DSKhachHang.back().MaKH) + 1, kh.MaKH, 10);
+	// -> Không biết vì sao thêm khách hàng lần 2 thì danh sách khách hàng lại bị trống,
+	// mã khách hàng về lại 1 
 	cout << "Ma khach hang: " << kh.MaKH << endl;
 	cout << "Nhap ten khach hang: ";
 	fflush(stdin);
@@ -45,7 +47,7 @@ void InKH(KhachHang kh)
 	cout << left << "|" << setw(6) << kh.MaKH
 		 << "|" << setw(19) << kh.TenKH
 		 << "|" << setw(22) << fixed << setprecision(2) << kh.sodu << setw(4) << "VND"
-		 << "|" << setw(15) << (kh.TrangThai == true ? "Da kich hoat" : "Bi khoa")
+		 << "|" << setw(15) << (kh.TrangThai == true ? "Da kich hoat" : "Da khoa")
 		 << "|" << endl;
 }
 
@@ -65,7 +67,7 @@ void GhiKHvaoFile()
 
 void InDSKH(bool TrangThai)
 {
-#pragma omp critical
+#pragma omp critical(InDSKH)
 	for (int i = 0; i < DSKhachHang.size(); i++)
 	{
 		if (i == 0)

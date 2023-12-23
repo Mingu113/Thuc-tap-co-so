@@ -5,11 +5,7 @@
 #include <iomanip>
 using namespace std;
 // Nguyễn Hoàng Minh
-// TODO
-/*
-	Thêm trạng thái tài khoản
-	Tìm kiếm khách hàng theo tên hoặc mã
-*/
+
 
 // Hàm main
 int main()
@@ -118,7 +114,7 @@ Menu:
 		goto Menu;
 		break;
 	case 2:
-		cout << "Nhap ma khach hang can xoa: ";
+		cout << "Nhap ma khach hang muon khoa: ";
 		char Ma[4];
 		fflush(stdin);
 		cin.getline(Ma, sizeof(Ma));

@@ -2,7 +2,7 @@
 #ifndef KHACHHANG_H
 #define KHACHHANG_H
 #include<vector>
-// struct Khách hàng gồm Mã khách hàng, tên khách hàng, số dư
+// struct Khách hàng gồm Mã khách hàng, tên khách hàng, số dư, trạng thái
 typedef struct
 {
 	char MaKH[4];	// Mã Khách hàng [4]
