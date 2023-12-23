@@ -165,48 +165,35 @@ void InGD(GiaoDich gd)
 
 void SaoKe(bool InToanBo)
 {
-	bool temp = false;
 	if (!InToanBo)
 	{
 		char Ma[4];
 		cout << "Nhap ma khach hang can lap sao ke: ";
 		fflush(stdin);
-		cin >> Ma;
-#pragma omp critical
-		for (int i = 0; i < DSGiaoDich.size(); i++)
-		{
-			if (i == 0)
-				cout << "______________________________________________________________________________________________________________________\n"
-						"|  Ma GD  |   Ma KH  |      Giao dich              |   Loai GD  |      So du hien tai      |    Thoi gian giao dich  |\n"
-						"|_________|__________|_____________________________|____________|__________________________|_________________________|\n";
-
-			if (strcmp(DSGiaoDich[i].MaKH, Ma) == 0)
-			{
-				temp = true;
-				InGD(DSGiaoDich[i]);
-			}
-		}
-	}
-	else
-	{
+		cin.getline(Ma, sizeof(Ma));
 		cout << "______________________________________________________________________________________________________________________\n"
 				"|  Ma GD  |   Ma KH  |      Giao dich              |   Loai GD  |      So du hien tai      |    Thoi gian giao dich  |\n"
 				"|_________|__________|_____________________________|____________|__________________________|_________________________|\n";
-		temp = true;
 #pragma omp critical
+		for (int i = 0; i < DSGiaoDich.size(); i++)
+			if (strcmp(DSGiaoDich[i].MaKH, Ma) == 0)
+				InGD(DSGiaoDich[i]);
+	}
+	else
+	{
+#pragma omp critical
+		cout << "______________________________________________________________________________________________________________________\n"
+				"|  Ma GD  |   Ma KH  |      Giao dich              |   Loai GD  |      So du hien tai      |    Thoi gian giao dich  |\n"
+				"|_________|__________|_____________________________|____________|__________________________|_________________________|\n";
 		for (int i = 0; i < DSGiaoDich.size(); i++)
 			InGD(DSGiaoDich[i]);
 	}
-
-	if (!temp)
-		cout << "Khong co giao dich nao\n";
-	else
-		cout << "|_________|__________|_____________________________|____________|__________________________|_________________________|\n";
+	cout << "|_________|__________|_____________________________|____________|__________________________|_________________________|\n";
 }
 
 void XuatSangCSV_GD()
 {
-	char FileName[] = "GiaoDich.csv";
+	string FileName = "GiaoDich.csv";
 	ofstream file(FileName);
 	// Viết CSV header
 	file << "Ma GD, MaKH, Luong Tien, Loai GD,So du hien tai,Thoi gian giao dich" << endl;
@@ -221,5 +208,5 @@ void XuatSangCSV_GD()
 	}
 	file.close();
 	cout << "Da xuat lich su giao dich vao file: " << FileName << endl;
-	wait(5);
+	wait(3);
 }

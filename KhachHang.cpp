@@ -4,6 +4,8 @@
 #include <iomanip>
 #include <sstream>
 #include <cctype>
+#include <chrono>
+#include <thread>
 #include "KhachHang.h"
 using namespace std;
 // Đường dẫn tập tin khách hàng
@@ -25,11 +27,19 @@ bool ThemKH(KhachHang kh)
 }
 void wait(int sec)
 {
-	time_t timer = time(NULL) + sec;
-	while (time(NULL) < timer)
+	auto start = std::chrono::steady_clock::now();
+	auto end = chrono::seconds(sec) + start;
+	while (chrono::steady_clock::now() < end)
 	{
+		// Nếu người dùng nhập gì thì ngừng lập tức
+		if (cin.peek() == '\n')
+		{
+			cin.ignore(); // clear buffer nhập
+			return;
+		}
+		// kêu thread ngủ trong vòng 100ms thay vì gọi thời gian hiện tại liên tục
+		this_thread::sleep_for(chrono::milliseconds(10)); 
 	}
-	return;
 }
 KhachHang ThemKHtuBP()
 {
@@ -190,7 +200,7 @@ void DocKHtuFile()
 
 void XuatSangCSV_KH()
 {
-	char FileName[] = "KhachHang.csv";
+	string FileName = "KhachHang.csv";
 	ofstream file(FileName);
 	// Viết CSV header
 	file << "Ma KH, Ten KH, So du, Trang thai tai khoan" << endl;
@@ -202,7 +212,7 @@ void XuatSangCSV_KH()
 	}
 	file.close();
 	cout << "Da xuat danh sach khach hang vao file: " << FileName << endl;
-	wait(5);
+	wait(3);
 }
 void ToLowercase(char *str)
 {
@@ -218,7 +228,8 @@ void TimKiemDSKH()
 	cout << "___________________________" << endl;
 	cout << "|Tim kiem khach hang theo:| " << endl;
 	cout << "|-------------------------|" << endl;
-	cout << left << "|" << setw(5) << "[1]" << setw(20) << "Ten"
+	cout << left
+		 << "|" << setw(5) << "[1]" << setw(20) << "Ten"
 		 << "|" << endl
 		 << "|" << setw(5) << "[2]" << setw(20) << "Ma"
 		 << "|" << endl;
@@ -258,6 +269,7 @@ void TimKiemDSKH()
 		cout << "_______________________________________________________________________\n"
 				"|  Ma  |   Ten Khach hang  |      So tien             |   Trang thai  |\n"
 				"|______|___________________|__________________________|_______________|\n";
+#pragma omp parallel for
 		for (auto &khach : DSKhachHang)
 		{
 			if (strcmp(Ma, khach.MaKH) == 0)
