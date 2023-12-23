@@ -27,6 +27,8 @@ KhachHang ThemKHtuBP();
 
 // Khoá Khách hàng từ mã khách hàng, trả về true sau khi hoàn thành
 bool KhoaKH(char *MaKH);
+// Mở khoá tài khoản khách hàng, trả về true sau khi hoàn thành
+bool MoKhoaKH(char *MaKH);
 
 // Cập nhật khách hàng từ mã khách hàng, trả về true sau khi hoàn thành
 bool CapNhatKH(KhachHang kh);

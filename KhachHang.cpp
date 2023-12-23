@@ -30,7 +30,7 @@ KhachHang ThemKHtuBP()
 	// Lấy mã khách hàng của khách hàng cuối cùng trong danh sách khách hàng, +1
 	itoa(atoi(DSKhachHang.back().MaKH) + 1, kh.MaKH, 10);
 	// -> Không biết vì sao thêm khách hàng lần 2 thì danh sách khách hàng lại bị trống,
-	// mã khách hàng về lại 1 
+	// mã khách hàng về lại 1
 	cout << "Ma khach hang: " << kh.MaKH << endl;
 	cout << "Nhap ten khach hang: ";
 	fflush(stdin);
@@ -105,6 +105,37 @@ bool KhoaKH(char *MaKH)
 	{
 		DSKhachHang[pos].TrangThai = false;
 		GhiKHvaoFile();
+		cout << "Da khoa tai khoan khach hang " << DSKhachHang[pos].TenKH << endl;
+		cout << "_______________________________________________________________________\n"
+				"|  Ma  |   Ten Khach hang  |      So tien             |   Trang thai  |\n"
+				"|______|___________________|__________________________|_______________|\n";
+		InKH(DSKhachHang[pos]);
+		cout << "|______|___________________|__________________________|_______________|\n";
+		return true;
+	}
+	return false;
+}
+bool MoKhoaKH(char *MaKH)
+{
+	int pos = -1;
+	for (int i = 0; i < DSKhachHang.size(); i++)
+	{
+		if (strcmp(DSKhachHang[i].MaKH, MaKH) == 0)
+		{
+			pos = i;
+			break;
+		}
+	}
+	if (pos != -1)
+	{
+		DSKhachHang[pos].TrangThai = true;
+		GhiKHvaoFile();
+		cout << "Da mo khoa tai khoan khach hang " << DSKhachHang[pos].TenKH << endl;
+		cout << "_______________________________________________________________________\n"
+				"|  Ma  |   Ten Khach hang  |      So tien             |   Trang thai  |\n"
+				"|______|___________________|__________________________|_______________|\n";
+		InKH(DSKhachHang[pos]);
+		cout << "|______|___________________|__________________________|_______________|\n";
 		return true;
 	}
 	return false;
@@ -212,7 +243,6 @@ void TimKiemDSKH()
 			if (found)
 				InKH(khach);
 		}
-		free(found);
 		break;
 	case 2:
 		cout << "Nhap ma khach hang can tim: ";

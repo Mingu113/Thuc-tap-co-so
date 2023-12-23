@@ -6,7 +6,6 @@
 using namespace std;
 // Nguyễn Hoàng Minh
 
-
 // Hàm main
 int main()
 {
@@ -79,7 +78,7 @@ Menu:
 	system("cls");
 	string Menu[] = {
 		"Them khach hang",
-		"Khoa tai khoan Khach hang",
+		"Khoa/Mo tai khoan Khach hang",
 		"Hien thi danh sach khach hang",
 		"In sao ke giao dich",
 		"In toan bo giao dich",
@@ -114,11 +113,35 @@ Menu:
 		goto Menu;
 		break;
 	case 2:
-		cout << "Nhap ma khach hang muon khoa: ";
+		cout << "Khoa hoac kich hoat tai khoan khach hang:\n";
+		cout << "_______________________" << endl;
+		cout << left
+			 << "|" << setw(3) << "1"
+			 << "|" << setw(17) << "Khoa"
+			 << "|" << endl
+			 << "|" << setw(3) << "2"
+			 << "|" << setw(17) << "Kich hoat"
+			 << "|" << endl;
+		cout << "|___|_________________|" << endl;
+		cout << "Nhap mot so: ";
+		cin >> choice;
 		char Ma[4];
-		fflush(stdin);
-		cin.getline(Ma, sizeof(Ma));
-		KhoaKH(Ma);
+		switch (choice)
+		{
+		case 1:
+			cout << "Nhap ma khach hang: ";
+			fflush(stdin);
+			cin.getline(Ma, sizeof(Ma));
+			KhoaKH(Ma);
+			break;
+		case 2:
+			cout << "Nhap ma khach hang: ";
+			fflush(stdin);
+			cin.getline(Ma, sizeof(Ma));
+			MoKhoaKH(Ma);
+		default:
+			break;
+		}
 		getchar();
 		goto Menu;
 		break;
@@ -127,11 +150,12 @@ Menu:
 		cout << "_______________________" << endl;
 		cout << left
 			 << "|" << setw(3) << "1"
-			 << "|" << setw(17) << "Da kich hoat" << "|" << endl
+			 << "|" << setw(17) << "Da kich hoat"
+			 << "|" << endl
 			 << "|" << setw(3) << "2"
-			 << "|" << setw(17) << "Da khoa" << "|" << endl;
+			 << "|" << setw(17) << "Da khoa"
+			 << "|" << endl;
 		cout << "|___|_________________|" << endl;
-		int choice;
 		cin >> choice;
 		switch (choice)
 		{
