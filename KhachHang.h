@@ -46,4 +46,6 @@ void XuatSangCSV_KH();
 
 // Tìm kiếm và hiển thị các khách hàng trong danh sách
 void TimKiemDSKH();
+// Hàm chung, cho cả hai thư viện, chờ một khoảng thời gian bằng số giây được truyền 
+void wait(int sec);
 #endif

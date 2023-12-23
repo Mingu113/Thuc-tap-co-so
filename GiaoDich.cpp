@@ -74,7 +74,11 @@ NhapMa:
 		if (DSKhachHang[i] == kh)
 		{
 			if (!DSKhachHang[i].TrangThai)
+			{
 				cout << "Tai khoan da bi khoa, khong the giao dich" << endl;
+				goto NhapMa;
+				break;
+			}
 			else
 			{
 				kh = DSKhachHang[i];
@@ -217,4 +221,5 @@ void XuatSangCSV_GD()
 	}
 	file.close();
 	cout << "Da xuat lich su giao dich vao file: " << FileName << endl;
+	wait(5);
 }

@@ -23,7 +23,14 @@ bool ThemKH(KhachHang kh)
 	GhiKHvaoFile();
 	return true;
 }
-
+void wait(int sec)
+{
+	time_t timer = time(NULL) + sec;
+	while (time(NULL) < timer)
+	{
+	}
+	return;
+}
 KhachHang ThemKHtuBP()
 {
 	KhachHang kh;
@@ -195,6 +202,7 @@ void XuatSangCSV_KH()
 	}
 	file.close();
 	cout << "Da xuat danh sach khach hang vao file: " << FileName << endl;
+	wait(5);
 }
 void ToLowercase(char *str)
 {
