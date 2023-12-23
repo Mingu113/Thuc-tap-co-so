@@ -84,7 +84,7 @@ Menu:
 	string Menu[] = {
 		"Them khach hang",
 		"Khoa tai khoan Khach hang",
-		"In danh sach khach hang",
+		"Hien thi danh sach khach hang",
 		"In sao ke giao dich",
 		"In toan bo giao dich",
 		"Xuat lich su giao dich sang .CSV",
@@ -127,7 +127,27 @@ Menu:
 		goto Menu;
 		break;
 	case 3:
-		InDSKH();
+		cout << "Hien thi danh sach khach hang:\n";
+		cout << "_______________________" << endl;
+		cout << left
+			 << "|" << setw(3) << "1"
+			 << "|" << setw(17) << "Da kich hoat" << "|" << endl
+			 << "|" << setw(3) << "2"
+			 << "|" << setw(17) << "Da khoa" << "|" << endl;
+		cout << "|___|_________________|" << endl;
+		int choice;
+		cin >> choice;
+		switch (choice)
+		{
+		case 1:
+			InDSKH(true);
+			break;
+		case 2:
+			InDSKH(false);
+			break;
+		default:
+			return;
+		}
 		fflush(stdin);
 		getchar();
 		goto Menu;
@@ -155,6 +175,7 @@ Menu:
 		break;
 	case 8:
 		TimKiemDSKH();
+		fflush(stdin);
 		getchar();
 		goto Menu;
 		break;

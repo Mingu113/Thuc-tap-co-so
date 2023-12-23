@@ -45,7 +45,7 @@ void InKH(KhachHang kh)
 	cout << left << "|" << setw(6) << kh.MaKH
 		 << "|" << setw(19) << kh.TenKH
 		 << "|" << setw(22) << fixed << setprecision(2) << kh.sodu << setw(4) << "VND"
-		 << "|" << setw(15) << (kh.TrangThai == true ? "Da kich hoat" : "Bi khoa") 
+		 << "|" << setw(15) << (kh.TrangThai == true ? "Da kich hoat" : "Bi khoa")
 		 << "|" << endl;
 }
 
@@ -63,19 +63,29 @@ void GhiKHvaoFile()
 	fclose(f);
 }
 
-void InDSKH()
+void InDSKH(bool TrangThai)
 {
-#pragma omp critical(InDSKH)
+#pragma omp critical
 	for (int i = 0; i < DSKhachHang.size(); i++)
 	{
 		if (i == 0)
 			cout << "_______________________________________________________________________\n"
 					"|  Ma  |   Ten Khach hang  |      So tien             |   Trang thai  |\n"
 					"|______|___________________|__________________________|_______________|\n";
-		InKH(DSKhachHang[i]);
+		if (TrangThai)
+		{
+			if (DSKhachHang[i].TrangThai)
+				InKH(DSKhachHang[i]);
+		}
+		else
+		{
+			if (!DSKhachHang[i].TrangThai)
+				InKH(DSKhachHang[i]);
+		}
 		if (i == DSKhachHang.size() - 1)
 			cout << "|______|___________________|__________________________|_______________|\n";
 	}
+	// Độ phức tạp cao
 }
 
 bool KhoaKH(char *MaKH)
@@ -167,8 +177,10 @@ void TimKiemDSKH()
 	cout << "___________________________" << endl;
 	cout << "|Tim kiem khach hang theo:| " << endl;
 	cout << "|-------------------------|" << endl;
-	cout << left << "|" << setw(5) << "[1]" << setw(20) << "Ten" << "|" << endl
-		 << "|" << setw(5) << "[2]" << setw(20) << "Ma" << "|" << endl;
+	cout << left << "|" << setw(5) << "[1]" << setw(20) << "Ten"
+		 << "|" << endl
+		 << "|" << setw(5) << "[2]" << setw(20) << "Ma"
+		 << "|" << endl;
 	cout << "|_________________________|" << endl;
 	cout << "Chon mot so: ";
 	int choice;
@@ -186,11 +198,11 @@ void TimKiemDSKH()
 		ToLowercase(Ten);
 		char *found;
 		char temp[sizeof(kh.TenKH)];
-		cout << "_______________________________________________________\n"
-				"|  Ma  |   Ten Khach hang  |      So tien             |\n"
-				"|______|___________________|__________________________|\n";
+		cout << "_______________________________________________________________________\n"
+				"|  Ma  |   Ten Khach hang  |      So tien             |   Trang thai  |\n"
+				"|______|___________________|__________________________|_______________|\n";
 #pragma omp critical(TimKiemDSKH)
-			for (auto &khach : DSKhachHang)
+		for (auto &khach : DSKhachHang)
 		{
 			strcpy(temp, khach.TenKH);
 			ToLowercase(temp);
@@ -203,9 +215,9 @@ void TimKiemDSKH()
 	case 2:
 		cout << "Nhap ma khach hang can tim: ";
 		cin >> Ma;
-		cout << "_______________________________________________________\n"
-				"|  Ma  |   Ten Khach hang  |      So tien             |\n"
-				"|______|___________________|__________________________|\n";
+		cout << "_______________________________________________________________________\n"
+				"|  Ma  |   Ten Khach hang  |      So tien             |   Trang thai  |\n"
+				"|______|___________________|__________________________|_______________|\n";
 		for (auto &khach : DSKhachHang)
 		{
 			if (strcmp(Ma, khach.MaKH) == 0)
@@ -215,5 +227,6 @@ void TimKiemDSKH()
 	default:
 		break;
 	}
-	cout << "|______|___________________|__________________________|\n";
+	cout << "|______|___________________|__________________________|_______________|\n";
+	return;
 }

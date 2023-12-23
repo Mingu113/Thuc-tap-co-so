@@ -34,8 +34,8 @@ bool CapNhatKH(KhachHang kh);
 // In Khách hàng
 void InKH(KhachHang kh);
 
-// In danh sách khách hàng hiện tại
-void InDSKH();
+// In danh sách khách hàng hiện tại, true để in tài khoản đã kích hoạt, false để in tài khoản đã bị khoá
+void InDSKH(bool TrangThai);
 // So sánh hai khách hàng bằng mã khách hàng
 bool operator==(const KhachHang &a, const KhachHang &b);
 
