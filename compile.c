@@ -6,11 +6,11 @@ int main(int argc, char *argv[])
 {
     printf("Compiler: g++\n");
     printf("Compiling *.cpp -> .o: ");
-    char command1[] = "g++ -c *.cpp -O3";
+    char command1[] = "g++ -fopenmp -lgomp -c *.cpp -O3";
     puts(command1);
     if (system(command1) == 0)
     {
-        char command2[] = "g++ *.o -O3 -o XLGD";
+        char command2[] = "g++ -fopenmp -lgomp *.o -O3 -o XLGD";
         printf("Linking .o files into executable XLGD: ");
         puts(command2);
         if (system(command2) == 0)

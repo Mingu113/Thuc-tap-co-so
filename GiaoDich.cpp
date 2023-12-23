@@ -3,7 +3,6 @@
 #include <locale>
 #include <cstring>
 #include <fstream>
-#include <algorithm>
 #include <iomanip>
 #include "GiaoDich.h"
 #include "KhachHang.h"
@@ -57,14 +56,16 @@ void ThucHienGD()
 {
 	cout << "----------------------------" << endl;
 	// Tìm khách hàng theo mã
-	cout << "Nhan huy de ngung" << endl;
+	cout << "____________________________________________________________" << endl;
+	cout << "|" << setw(58) << "Nhan huy de ngung"
+		 << "|" << endl;
 	GiaoDich gd;
 	KhachHang kh;
 	char TienGD[1024];
 NhapMa:
-	cout << "Nhap ma khach hang: ";
+	cout << "|Nhap ma khach hang: ";
 	fflush(stdin);
-	gets(kh.MaKH);
+	cin.getline(kh.MaKH, sizeof(kh.MaKH));
 	// Nếu người nhập nhấn huỷ thì ngưng
 	if (strcmp(kh.MaKH, "huy") == 0)
 		return;
@@ -72,11 +73,17 @@ NhapMa:
 	{
 		if (DSKhachHang[i] == kh)
 		{
-			kh = DSKhachHang[i];
-			strcpy(gd.MaKH, kh.MaKH);
-			cout << "Khach hang: " << kh.TenKH << endl;
-			goto NhapLoaiGD;
-			break;
+			if (!DSKhachHang[i].TrangThai)
+				cout << "Tai khoan da bi khoa, khong the giao dich" << endl;
+			else
+			{
+				kh = DSKhachHang[i];
+				strcpy(gd.MaKH, kh.MaKH);
+				cout << "|Khach hang: " << setw(46) << kh.TenKH << "|" << endl;
+				cout << "|__________________________________________________________|" << endl;
+				goto NhapLoaiGD;
+				break;
+			}
 		}
 	}
 	cout << "Khong tim thay ma khach hang" << endl;
@@ -84,11 +91,13 @@ NhapMa:
 // Nhập loại giao dịch
 NhapLoaiGD:
 	int LoaiGD;
+	cout << "________________" << endl;
 	string GD_Type[] = {"Rut tien", "Gui tien", "Huy"};
 	for (int i = 0; i < size(GD_Type); i++)
 	{
-		cout << "[" << i + 1 << "] " << GD_Type[i] << endl;
+		cout << "| [" << i + 1 << "] " << setw(10) << GD_Type[i] << "|" << endl;
 	}
+	cout << "|_______________|" << endl;
 	cout << "Chon loai giao dich: ";
 	cin >> LoaiGD;
 	if (LoaiGD >= 1 && LoaiGD <= 2)
@@ -103,7 +112,8 @@ NhapLoaiGD:
 	cout << "Loai giao dich: " << GD_Type[LoaiGD - 1] << endl;
 // Nhập lượng tiền
 NhapLuongTien:
-	cout << "Nhap luong tien can giao dich: ";
+	cout << "____________________________________________________" << endl;
+	cout << "|Nhap luong tien can giao dich: ";
 	cin >> TienGD;
 	if (strcmp(TienGD, "huy") == 0)
 		return;
@@ -118,6 +128,8 @@ NhapLuongTien:
 		(gd.LoaiGD == 1) ? kh.sodu -= gd.LuongTien : kh.sodu += gd.LuongTien;
 		CapNhatKH(kh);
 	}
+	cout << "|__________________________________________________|\n\n\n"
+		 << endl;
 	// Thực hiện giao dịch
 	gd.MaGD = DSGiaoDich.size() + 1;
 	gd.NgayGD = time(NULL);
@@ -153,10 +165,10 @@ void SaoKe(bool InToanBo)
 	if (!InToanBo)
 	{
 		char Ma[4];
-		cout << "Nhap ma khach hang can lap sao ke ";
+		cout << "Nhap ma khach hang can lap sao ke: ";
 		fflush(stdin);
 		cin >> Ma;
-#pragma omp parallel for
+#pragma omp critical
 		for (int i = 0; i < DSGiaoDich.size(); i++)
 		{
 			if (i == 0)
@@ -177,7 +189,7 @@ void SaoKe(bool InToanBo)
 				"|  Ma GD  |   Ma KH  |      Giao dich              |   Loai GD  |      So du hien tai      |    Thoi gian giao dich  |\n"
 				"|_________|__________|_____________________________|____________|__________________________|_________________________|\n";
 		temp = true;
-#pragma omp parallel for
+#pragma omp critical
 		for (int i = 0; i < DSGiaoDich.size(); i++)
 			InGD(DSGiaoDich[i]);
 	}

@@ -8,6 +8,7 @@ typedef struct
 	char MaKH[4];	// Mã Khách hàng [4]
 	char TenKH[50]; // Tên khách hàng [5]
 	float sodu;		// Số dư tài khoản float
+	bool TrangThai; // Trạng thái tài khoản, true nếu được kích hoạt, false nếu bị khoá
 } KhachHang;
 // Vector Danh sách khách hàng
 extern std::vector<KhachHang> DSKhachHang; // -> KHÔNG ĐƯỢC QUÊN KHI SỬ DỤNG MỘT ĐỐI TƯỢNG NÀO ĐÓ CHO NHIỀU FILE. SỬ DỤNG EXTERN
@@ -24,8 +25,8 @@ bool ThemKH(KhachHang kh);
 // Nhập khách hàng từ bàn phím, trả về struct kiểu khách hàng
 KhachHang ThemKHtuBP();
 
-// Xoá Khách hàng từ mã khách hàng, trả về true sau khi hoàn thành
-bool XoaKH(char *MaKH);
+// Khoá Khách hàng từ mã khách hàng, trả về true sau khi hoàn thành
+bool KhoaKH(char *MaKH);
 
 // Cập nhật khách hàng từ mã khách hàng, trả về true sau khi hoàn thành
 bool CapNhatKH(KhachHang kh);

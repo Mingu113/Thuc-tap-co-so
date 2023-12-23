@@ -43,7 +43,7 @@ Menu:
 			cout << left << "|" << setw(3) << i + 1 << "|";
 			cout << setw(40) << "Thoat"
 				 << "|" << endl;
-			cout << "|____________________________________________|" << endl;
+			cout << "|___|________________________________________|" << endl;
 			cout << "Nhap mot so: ";
 			break;
 		}
@@ -83,7 +83,7 @@ Menu:
 	system("cls");
 	string Menu[] = {
 		"Them khach hang",
-		"Xoa Khach hang",
+		"Khoa tai khoan Khach hang",
 		"In danh sach khach hang",
 		"In sao ke giao dich",
 		"In toan bo giao dich",
@@ -92,6 +92,7 @@ Menu:
 		"Tim kiem khach hang"};
 	int i = 0;
 	cout << "______________________________________________" << endl;
+#pragma omp single
 	while (i <= size(Menu))
 	{
 		if (i == size(Menu))
@@ -99,7 +100,7 @@ Menu:
 			cout << left << "|" << setw(3) << i + 1 << "|"
 				 << setw(40) << "Thoat"
 				 << "|\n";
-			cout << "|____________________________________________|" << endl
+			cout << "|___|________________________________________|" << endl
 				 << "Nhap mot so: ";
 			break;
 		}
@@ -120,8 +121,8 @@ Menu:
 		cout << "Nhap ma khach hang can xoa: ";
 		char Ma[4];
 		fflush(stdin);
-		gets(Ma);
-		XoaKH(Ma);
+		cin.getline(Ma, sizeof(Ma));
+		KhoaKH(Ma);
 		getchar();
 		goto Menu;
 		break;
@@ -155,6 +156,7 @@ Menu:
 	case 8:
 		TimKiemDSKH();
 		getchar();
+		goto Menu;
 		break;
 	case size(Menu) + 1:
 		return;

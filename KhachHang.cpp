@@ -4,7 +4,6 @@
 #include <iomanip>
 #include <sstream>
 #include <cctype>
-#include <ctype.h>
 #include "KhachHang.h"
 using namespace std;
 // Đường dẫn tập tin khách hàng
@@ -33,10 +32,11 @@ KhachHang ThemKHtuBP()
 	cout << "Ma khach hang: " << kh.MaKH << endl;
 	cout << "Nhap ten khach hang: ";
 	fflush(stdin);
-	gets(kh.TenKH);
+	cin.getline(kh.TenKH, sizeof(kh.TenKH));
 	cout << "Nhap so du khach hang: ";
 	fflush(stdin);
 	cin >> kh.sodu;
+	kh.TrangThai = true;
 	return kh;
 }
 
@@ -45,6 +45,7 @@ void InKH(KhachHang kh)
 	cout << left << "|" << setw(6) << kh.MaKH
 		 << "|" << setw(19) << kh.TenKH
 		 << "|" << setw(22) << fixed << setprecision(2) << kh.sodu << setw(4) << "VND"
+		 << "|" << setw(15) << (kh.TrangThai == true ? "Da kich hoat" : "Bi khoa") 
 		 << "|" << endl;
 }
 
@@ -64,20 +65,20 @@ void GhiKHvaoFile()
 
 void InDSKH()
 {
-#pragma omp parallel for
+#pragma omp critical(InDSKH)
 	for (int i = 0; i < DSKhachHang.size(); i++)
 	{
 		if (i == 0)
-			cout << "_______________________________________________________\n"
-					"|  Ma  |   Ten Khach hang  |      So tien             |\n"
-					"|______|___________________|__________________________|\n";
+			cout << "_______________________________________________________________________\n"
+					"|  Ma  |   Ten Khach hang  |      So tien             |   Trang thai  |\n"
+					"|______|___________________|__________________________|_______________|\n";
 		InKH(DSKhachHang[i]);
 		if (i == DSKhachHang.size() - 1)
-			cout << "|______|___________________|__________________________|\n";
+			cout << "|______|___________________|__________________________|_______________|\n";
 	}
 }
 
-bool XoaKH(char *MaKH)
+bool KhoaKH(char *MaKH)
 {
 	int pos = -1;
 	for (int i = 0; i < DSKhachHang.size(); i++)
@@ -90,7 +91,7 @@ bool XoaKH(char *MaKH)
 	}
 	if (pos != -1)
 	{
-		DSKhachHang.erase(DSKhachHang.begin() + pos);
+		DSKhachHang[pos].TrangThai = false;
 		GhiKHvaoFile();
 		return true;
 	}
@@ -106,6 +107,7 @@ bool CapNhatKH(KhachHang kh)
 		{
 			complete = true;
 			DSKhachHang[i].sodu = kh.sodu;
+			DSKhachHang[i].TrangThai = kh.TrangThai;
 			strcpy(DSKhachHang[i].MaKH, kh.MaKH);
 			strcpy(DSKhachHang[i].TenKH, kh.TenKH);
 			GhiKHvaoFile();
@@ -141,19 +143,19 @@ void XuatSangCSV_KH()
 	char FileName[] = "KhachHang.csv";
 	ofstream file(FileName);
 	// Viết CSV header
-	file << "Ma KH, Ten KH, So du" << endl;
+	file << "Ma KH, Ten KH, So du, Trang thai tai khoan" << endl;
 	/// Xuất nội dung
 	for (auto &kh : DSKhachHang)
 	{
-		file << kh.MaKH << ", " << kh.TenKH << ", " << fixed << setprecision(2) << kh.sodu << endl;
+		string temp = (kh.TrangThai) ? "Da kich hoat" : "Da khoa";
+		file << kh.MaKH << ", " << kh.TenKH << ", " << fixed << setprecision(2) << kh.sodu << "," << temp << endl;
 	}
 	file.close();
 	cout << "Da xuat danh sach khach hang vao file: " << FileName << endl;
 }
-void ToLowercase(char* str)
+void ToLowercase(char *str)
 {
-	#pragma omp parallel for
-	for(int i = 0; str[i] != '\0'; i++)
+	for (int i = 0; str[i] != '\0'; i++)
 	{
 		str[i] = tolower(str[i]);
 	}
@@ -162,9 +164,12 @@ void TimKiemDSKH()
 {
 	// Hien thi lua chon
 	cout << "Tim kiem khach hang: " << endl;
-	cout << "Tim kiem khach hang theo: " << endl;
-	cout << left << setw(5) << "[1]" << setw(10) << "Ten" << endl
-		 << setw(5) << "[2]" << setw(10) << "Ma" << endl;
+	cout << "___________________________" << endl;
+	cout << "|Tim kiem khach hang theo:| " << endl;
+	cout << "|-------------------------|" << endl;
+	cout << left << "|" << setw(5) << "[1]" << setw(20) << "Ten" << "|" << endl
+		 << "|" << setw(5) << "[2]" << setw(20) << "Ma" << "|" << endl;
+	cout << "|_________________________|" << endl;
 	cout << "Chon mot so: ";
 	int choice;
 	cin >> choice;
@@ -184,8 +189,8 @@ void TimKiemDSKH()
 		cout << "_______________________________________________________\n"
 				"|  Ma  |   Ten Khach hang  |      So tien             |\n"
 				"|______|___________________|__________________________|\n";
-#pragma omp parallel for
-		for (auto &khach : DSKhachHang)
+#pragma omp critical(TimKiemDSKH)
+			for (auto &khach : DSKhachHang)
 		{
 			strcpy(temp, khach.TenKH);
 			ToLowercase(temp);
@@ -201,7 +206,6 @@ void TimKiemDSKH()
 		cout << "_______________________________________________________\n"
 				"|  Ma  |   Ten Khach hang  |      So tien             |\n"
 				"|______|___________________|__________________________|\n";
-#pragma omp parallel for
 		for (auto &khach : DSKhachHang)
 		{
 			if (strcmp(Ma, khach.MaKH) == 0)
