@@ -2,10 +2,7 @@
 #include <cstring>
 #include <fstream>
 #include <iomanip>
-#include <sstream>
-#include <cctype>
-#include <chrono>
-#include <thread>
+#include <cctype> // hàm tolower()
 #include "KhachHang.h"
 using namespace std;
 // Đường dẫn tập tin khách hàng
@@ -24,22 +21,6 @@ bool ThemKH(KhachHang kh)
 	DSKhachHang.push_back(kh);
 	GhiKHvaoFile();
 	return true;
-}
-void wait(int sec)
-{
-	auto start = std::chrono::steady_clock::now();
-	auto end = chrono::seconds(sec) + start;
-	while (chrono::steady_clock::now() < end)
-	{
-		// Nếu người dùng nhập gì thì ngừng lập tức
-		if (cin.peek() == '\n')
-		{
-			cin.ignore(); // clear buffer nhập
-			return;
-		}
-		// kêu thread ngủ trong vòng 100ms thay vì gọi thời gian hiện tại liên tục
-		this_thread::sleep_for(chrono::milliseconds(10)); 
-	}
 }
 KhachHang ThemKHtuBP()
 {
@@ -212,7 +193,8 @@ void XuatSangCSV_KH()
 	}
 	file.close();
 	cout << "Da xuat danh sach khach hang vao file: " << FileName << endl;
-	wait(3);
+	cin.get();
+	cin.ignore();
 }
 void ToLowercase(char *str)
 {

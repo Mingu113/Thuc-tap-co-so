@@ -1,6 +1,5 @@
 #include <iostream>
 #include <stdlib.h>
-#include <locale>
 #include <cstring>
 #include <fstream>
 #include <iomanip>
@@ -208,5 +207,6 @@ void XuatSangCSV_GD()
 	}
 	file.close();
 	cout << "Da xuat lich su giao dich vao file: " << FileName << endl;
-	wait(3);
+	cin.get();
+	cin.ignore();
 }

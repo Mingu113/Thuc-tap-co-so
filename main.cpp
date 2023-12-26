@@ -12,8 +12,7 @@ int main()
 	DocGDtuFile();
 	DocKHtuFile();
 	Menu();
-	cin.ignore();
-		cin.get();
+	cin.get();
 	system("cls");
 }
 
@@ -54,24 +53,17 @@ Menu:
 	case 1:
 		cout << "Quan ly khach hang va giao dich: " << endl;
 		Menu_KhachHang();
-
-		cin.ignore();
-		cin.get();
-		cin.ignore();
-		cin.get();
 		break;
 	case 2:
 		cout << "Thuc hien giao dich: " << endl;
 		ThucHienGD();
 		cin.ignore();
 		cin.get();
-		
 		break;
 	case size(Menu) + 1:
 		return;
 		break;
 	default:
-		
 		break;
 	}
 	goto Menu;
@@ -84,8 +76,8 @@ Menu:
 		"Them khach hang",
 		"Khoa/Mo tai khoan Khach hang",
 		"Hien thi danh sach khach hang",
-		"In sao ke giao dich",
-		"In toan bo giao dich",
+		"In sao ke cua mot khach hang",
+		"In lich su giao dich",
 		"Xuat lich su giao dich sang .CSV",
 		"Xuat danh sach khach hang sang .CSV",
 		"Tim kiem khach hang"};
@@ -114,7 +106,7 @@ Menu:
 		KhachHang kh;
 		kh = ThemKHtuBP();
 		ThemKH(kh);
-		
+
 		break;
 	case 2:
 		cout << "Khoa hoac kich hoat tai khoan khach hang:\n";
@@ -146,9 +138,8 @@ Menu:
 		default:
 			break;
 		}
-		cin.ignore();
 		cin.get();
-		
+
 		break;
 	case 3:
 		cout << "Hien thi danh sach khach hang:\n";
@@ -176,42 +167,35 @@ Menu:
 		}
 		cin.ignore();
 		cin.get();
-		
+
 		break;
 	case 4:
 		system("cls");
 		SaoKe();
-		cin.ignore();
 		cin.get();
-		
+
 		break;
 	case 5:
 		SaoKe(true);
 		cin.ignore();
 		cin.get();
-		
+		break;
 	case 6:
 		XuatSangCSV_GD();
-		cin.ignore();
-		cin.get();
-		
+		break;
 	case 7:
 		XuatSangCSV_KH();
-		cin.ignore();
-		cin.get();
-		
 		break;
 	case 8:
 		TimKiemDSKH();
-		cin.ignore();
 		cin.get();
-		
+
 		break;
 	case size(Menu) + 1:
 		return;
 		break;
 	default:
-		
+
 		break;
 	}
 	goto Menu;

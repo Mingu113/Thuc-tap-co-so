@@ -11,7 +11,7 @@ typedef struct
 	bool TrangThai; // Trạng thái tài khoản, true nếu được kích hoạt, false nếu bị khoá
 } KhachHang;
 // Vector Danh sách khách hàng
-extern std::vector<KhachHang> DSKhachHang; // -> KHÔNG ĐƯỢC QUÊN KHI SỬ DỤNG MỘT ĐỐI TƯỢNG NÀO ĐÓ CHO NHIỀU FILE. SỬ DỤNG EXTERN
+extern std::vector<KhachHang> DSKhachHang;
 
 // Ghi danh sách khách hàng vào file
 void GhiKHvaoFile();
@@ -46,6 +46,4 @@ void XuatSangCSV_KH();
 
 // Tìm kiếm và hiển thị các khách hàng trong danh sách
 void TimKiemDSKH();
-// Hàm chung, cho cả hai thư viện, chờ một khoảng thời gian bằng số giây được truyền 
-void wait(int sec);
 #endif
