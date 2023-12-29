@@ -257,6 +257,7 @@ void TimKiemDSKH()
 			if (strcmp(Ma, khach.MaKH) == 0)
 				InKH(khach);
 		}
+		cin.ignore();
 		break;
 	default:
 		break;
