@@ -3,8 +3,12 @@
 #Exclude teacher's example files
 QLDB.cpp
 QLNV.cpp
+.vs
+.vscode
 *.dat
 *.csv
+*.zip
+*.7z
 # Compiled Object files
 *.slo
 *.lo
