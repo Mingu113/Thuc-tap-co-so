@@ -170,7 +170,9 @@ void SaoKe(bool InToanBo)
 		cout << "Nhap ma khach hang can lap sao ke: ";
 		fflush(stdin);
 		cin.getline(Ma, sizeof(Ma));
-		cout << "______________________________________________________________________________________________________________________\n"
+		for(auto &kh : DSKhachHang)
+			if(strcmp(kh.MaKH, Ma) == 0) {cout << "Khach hang: " << kh.TenKH << endl; break;}
+		cout << "\n______________________________________________________________________________________________________________________\n"
 				"|  Ma GD  |   Ma KH  |      Giao dich              |   Loai GD  |      So du hien tai      |    Thoi gian giao dich  |\n"
 				"|_________|__________|_____________________________|____________|__________________________|_________________________|\n";
 #pragma omp critical

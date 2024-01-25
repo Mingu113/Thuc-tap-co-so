@@ -20,6 +20,7 @@ void Menu()
 {
 Menu:
 	system("cls");
+	cout << "Menu quan ly giao dich: " << endl;
 	string Title[] = {"Xu ly giao dich ngan hang don gian", "Chon chuc nang can thuc hien: "};
 	string Menu[] = {"Quan ly khach hang va giao dich", "Thuc hien giao dich"};
 	cout << "______________________________________________" << endl;
@@ -72,6 +73,7 @@ void Menu_KhachHang()
 {
 Menu:
 	system("cls");
+	cout << "Menu quan ly khach hang va giao dich" << endl;
 	string Menu[] = {
 		"Them khach hang",
 		"Khoa/Mo tai khoan Khach hang",
@@ -105,8 +107,13 @@ Menu:
 	case 1:
 		KhachHang kh;
 		kh = ThemKHtuBP();
-		ThemKH(kh);
-
+		if (ThemKH(kh))
+			cout << "Them khach hang thanh cong" << endl;
+		else
+			cout << "Them khach hang khong thanh cong" << endl;
+		InKH(kh);
+		cin.ignore();
+		cin.get();
 		break;
 	case 2:
 		cout << "Khoa hoac kich hoat tai khoan khach hang:\n";

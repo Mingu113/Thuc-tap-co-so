@@ -163,11 +163,11 @@ bool CapNhatKH(KhachHang kh)
 
 void DocKHtuFile()
 {
-	DSKhachHang.clear();
 	FILE *f;
 	f = fopen(PathCustomer, "rb");
 	if (f != NULL)
 	{
+		DSKhachHang.clear();
 		while (!feof(f))
 		{
 			KhachHang kh;
